@@ -295,8 +295,7 @@ TrelloPowerUp.initialize({
       return [{
         text: "Card Name",
         callback: function (t, opts) {
-          // Trello will call this if the user clicks on this sort
-          // opts.cards contains all card objects in the list
+          console.log(opts.cards)
           var sortedCards = opts.cards.sort(
             function(a,b) {
               if (a.name > b.name) {
