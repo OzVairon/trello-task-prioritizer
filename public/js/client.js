@@ -311,6 +311,18 @@ TrelloPowerUp.initialize({
             sortedIds: sortedCards.map(function (c) { return c.id; })
           };
         }
+      }, {
+        text: "Randomize",
+        callback: function (t, opts) {
+          var sortedCards = opts.cards.sort(
+            function(a,b) {
+              return Math.floor(Math.random() * 4 - 1); 
+            });
+          
+          return {
+            sortedIds: sortedCards.map(function (c) { return c.id; })
+          };
+        }
       }];
     });
   },
