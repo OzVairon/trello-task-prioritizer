@@ -120,7 +120,7 @@ var getBadges = function(t){
       callback: function(context) { // function to run on click
         return context.popup({
           title: 'Card Detail Badge Popup',
-          url: './vews/settings.html',
+          url: './views/settings.html',
           height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
         });
       }
@@ -145,7 +145,7 @@ var boardButtonCallback = function(t){
         text: 'Open Modal',
         callback: function(t){
           return t.modal({            
-            url: './vews/modal.html', // The URL to load for the iframe
+            url: './views/modal.html', // The URL to load for the iframe
             args: { text: 'Hello' }, // Optional args to access later with t.arg('text') on './modal.html'
             accentColor: '#F2D600', // Optional color for the modal header 
             height: 500, // Initial height for iframe; not used if fullscreen is true
@@ -180,7 +180,7 @@ var boardButtonCallback = function(t){
         text: 'Open Board Bar',
         callback: function(t){
           return t.boardBar({
-            url: './vews/board-bar.html',
+            url: './views/board-bar.html',
             height: 200
           })
           .then(function(){
@@ -281,7 +281,7 @@ TrelloPowerUp.initialize({
         title: 'Example Attachment Section: Yellowstone',
         content: {
           type: 'iframe',
-          url: t.signUrl('./vews/section.html', { arg: 'you can pass your section args here' }),
+          url: t.signUrl('./views/section.html', { arg: 'you can pass your section args here' }),
           height: 230
         }
       }];
@@ -343,13 +343,6 @@ TrelloPowerUp.initialize({
       icon: WHITE_ICON,
       text: 'Popup OZV',
       callback: boardButtonCallback
-    }, {
-      // or we can also have a button that is just a simple url
-      // clicking it will open a new tab at the provided url
-      icon: WHITE_ICON,
-      text: 'URL',
-      url: 'https://trello.com/inspiration',
-      target: 'Inspiring Boards' // optional target for above url
     }];
   },
   'card-badges': function(t, options){
@@ -410,7 +403,7 @@ TrelloPowerUp.initialize({
     // it is the least disruptive, and fits in well with the rest of Trello's UX
     return t.popup({
       title: 'Settings',
-      url: './vews/settings.html',
+      url: './views/settings.html',
       height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
     });
   },
@@ -457,7 +450,7 @@ TrelloPowerUp.initialize({
       return t.popup({
         title: 'My Auth Popup',
         args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: './vews/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+        url: './views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
         height: 140,
       });
     } else {
