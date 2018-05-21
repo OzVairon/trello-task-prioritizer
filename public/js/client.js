@@ -221,6 +221,7 @@ TrelloPowerUp.initialize({
     // you can have more than one attachment section on a card
     // you can group items together into one section, have a section
     // per attachment, or anything in between.
+    console.log(claimed)
     if(claimed && claimed.length > 0){
       // if the title for your section requires a network call or other
       // potentially length operation you can provide a function for the title
@@ -277,28 +278,7 @@ TrelloPowerUp.initialize({
       }];
     });
   },
-  // 'attachment-thumbnail': function(t, options){
-  //   // options.url has the url of the attachment for us
-  //   // return an object (or a Promise that resolves to it) with some or all of these properties:
-  //   // url, title, image, modified (Date), created (Date), createdBy, modifiedBy
-    
-  //   // You should use this if you have useful information about an attached URL but it
-  //   // doesn't warrant pulling it out into a section via the attachment-sections capability
-  //   // for example if you just want to show a preview image and give it a better name
-  //   // then attachment-thumbnail is the best option
-  //   return {
-  //     url: options.url,
-  //     title: '👉 ' + options.url + ' 👈',
-  //     image: {
-  //       url: GLITCH_ICON,
-  //       logo: true // false if you are using a thumbnail of the content
-  //     },
-  //   };
-    
-  //   // if we don't actually have any valuable information about the url
-  //   // we can let Trello know like so:
-  //   // throw t.NotHandled();
-  // },
+  
   'board-buttons': function(t, options){
     return [{
       // we can either provide a button that has a callback function
@@ -341,19 +321,7 @@ TrelloPowerUp.initialize({
     // we can let Trello know like so:
     // throw t.NotHandled();
   },
-  // 'format-url': function(t, options) {
-  //   // options.url has the url that we are being asked to format
-  //   // in our response we can include an icon as well as the replacement text
-    
-  //   return {
-  //     icon: GRAY_ICON, // don't use a colored icon here
-  //     text: '👉 ' + options.url + ' 👈' 
-  //   };
-    
-  //   // if we don't actually have any valuable information about the url
-  //   // we can let Trello know like so:
-  //   // throw t.NotHandled();
-  // },
+ 
   'show-settings': function(t, options){
     // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
     // what should Trello show. We highly recommend the popup in this case as
