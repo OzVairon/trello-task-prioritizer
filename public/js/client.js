@@ -88,22 +88,7 @@ var getBadges = function(t){
   return t.card('name')
   .get('name')
   .then(function(cardName){
-    console.log('We just loaded the card name for fun: ' + cardName);
-    
     return [{
-      // dynamic badges can have their function rerun after a set number
-      // of seconds defined by refresh. Minimum of 10 seconds.
-      dynamic: function(){
-        // we could also return a Promise that resolves to this as well if we needed to do something async first
-        return {
-          title: 'Detail Badge', // for detail badges only
-          text: 'Dynamic ' + (Math.random() * 100).toFixed(0).toString(),
-          icon: GRAY_ICON, // for card front badges only
-          color: randomBadgeColor(),
-          refresh: 10 // in seconds
-        };
-      }
-    }, {
       // its best to use static badges unless you need your badges to refresh
       // you can mix and match between static and dynamic
       title: 'Detail Badge', // for detail badges only
@@ -147,47 +132,14 @@ var boardButtonCallback = function(t){
           return t.modal({            
             url: './views/modal.html', // The URL to load for the iframe
             args: { text: 'Hello' }, // Optional args to access later with t.arg('text') on './modal.html'
-            accentColor: '#ff9933', // Optional color for the modal header 
+            accentColor: '#ffffff', // Optional color for the modal header 
             height: 500, // Initial height for iframe; not used if fullscreen is true
             fullscreen: false, // Whether the modal should stretch to take up the whole screen
-            callback: () => console.log('Goodbye.'), // optional function called if user closes modal (via `X` or escape)
+            //callback: () => console.log('Goodbye.'), // optional function called if user closes modal (via `X` or escape)
             title: 'Настройте веса для критериев', // Optional title for modal header
             // You can add up to 3 action buttons on the modal header - max 1 on the right side.
-            actions: [
-            // {
-            //   icon: GRAY_ICON,
-            //   url: 'https://google.com', // Opens the URL passed to it.
-            //   alt: 'Leftmost',
-            //   position: 'left',
-            // }, {
-            //   icon: GRAY_ICON,
-            //   callback: (tr) => tr.popup({ // Callback to be called when user clicks the action button.
-            //     title: 'Settings',
-            //     url: 'settings.html',
-            //     height: 164,
-            //   }),
-            //   alt: 'Second from left',
-            //   position: 'left',
-            // }, {
-            //   icon: GRAY_ICON,
-            //   callback: () => console.log('🏎'),
-            //   alt: 'Right side',
-            //   position: 'right',
-            // }
-            ],
+            actions: []
           })
-        }
-      },
-      {
-        text: 'Open Board Bar',
-        callback: function(t){
-          return t.boardBar({
-            url: './views/board-bar.html',
-            height: 200
-          })
-          .then(function(){
-            return t.closePopup();
-          });
         }
       }
     ]
