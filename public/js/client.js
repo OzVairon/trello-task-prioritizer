@@ -91,22 +91,28 @@ var randomBadgeColor = function() {
 
 var getBadges = function(t){
 
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours', '0')])
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours')])
   .spread(function(cardName, hours){
-    return [
-    {
-      title: 'Hours effort', // for detail badges only
-      text: hours + 'h',
-      icon: GRAY_ICON, // for card front badges only
-      callback: function(context) { // function to run on click
-        return context.popup({
-          title: 'Hours effort settings',
-          url: BASE_URL + 'views/params.html',
-          height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-        });
-      }
+
+    let result = [];
+
+    if (hours) {
+      result.push(
+        {
+          title: 'Hours effort', // for detail badges only
+          text: hours + 'h',
+          icon: GRAY_ICON, // for card front badges only
+          callback: function(context) { // function to run on click
+            return context.popup({
+              title: 'Hours effort settings',
+              url: BASE_URL + 'views/effort_hours.html',
+              height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+            });
+          }
+        }
+        )
     }
-    ];
+    return result;
   })
 
 
