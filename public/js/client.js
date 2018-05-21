@@ -85,9 +85,10 @@ var randomBadgeColor = function() {
 };
 
 var getBadges = function(t){
-  return t.card('all')
+  return t.card('name')
   .get('name')
   .then(function(cardName){
+    t.card('all').then(result => {console.log(result)})
     return [{
       // its best to use static badges unless you need your badges to refresh
       // you can mix and match between static and dynamic
