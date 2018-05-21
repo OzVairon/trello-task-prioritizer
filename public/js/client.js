@@ -91,7 +91,7 @@ var randomBadgeColor = function() {
 
 var getBadges = function(t){
 
-  return Promise.all(t.card('name').get('name'), t.get('card', 'shared', 'effort_hours', 0))
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours', 0)])
   .spread(function(cardName, hours){
     return [{
       // its best to use static badges unless you need your badges to refresh
