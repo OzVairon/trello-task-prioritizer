@@ -96,7 +96,7 @@ var getBadges = function(t, isDetailed){
 
     let result = [];
 
-    if (isDetaled || hours) {
+    if (isDetailed || hours) {
       if (hours == undefined) hours = 0;
       result.push(
         {
