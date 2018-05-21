@@ -23,13 +23,7 @@ t.render(function(){
 });
 
 document.getElementById('save').addEventListener('click', function(){
-  console.log(hoursField.value)
-  let data = ''
-  for (let i = 0; i < 2000; i++) {
-    data += 'a'
-  }
-  //return t.set('card', 'shared', 'effort_hours', hoursField.value)
-  return t.set('card', 'shared', 'testing_data', data)
+  return t.set('card', 'shared', 'effort_hours', hoursField.value)
   .then(function(){
       t.closePopup();
     }, function(err){
@@ -37,18 +31,4 @@ document.getElementById('save').addEventListener('click', function(){
       alert(err.message)
     }
   )
-})
-
-document.getElementById('clear').addEventListener('click', function(){
-  
-  return t.remove('card', 'shared', 'testing_data')
-  .then(function(){
-    t.closePopup();
-  })
-
-})
-
-
-document.getElementById('show').addEventListener('click', function(){
-    return t.get('card', 'shared', 'testing_data').then((t) => {console.log(t)})
 })

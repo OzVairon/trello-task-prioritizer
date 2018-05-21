@@ -100,9 +100,9 @@ var getBadges = function(t, isDetailed){
       if (hours == undefined) hours = 0;
       result.push(
         {
-          title: 'Hours effort', // for detail badges only
+          title: 'Hours effort', 
           text: hours + ' h',
-          icon: GRAY_ICON, // for card front badges only
+          icon: GRAY_ICON, 
           callback: function(context) { // function to run on click
             return context.popup({
               title: 'Hours effort settings',
@@ -112,7 +112,6 @@ var getBadges = function(t, isDetailed){
           }
         }
         )
-
     }
     
     return result;
@@ -209,18 +208,10 @@ TrelloPowerUp.initialize({
   // you can return a Promise (bluebird promises are included at TrelloPowerUp.Promise)
   // The Promise should resolve to the object type that is expected to be returned
   'attachment-sections': function(t, options){
-    // options.entries is a list of the attachments for this card
-    // you can look through them and 'claim' any that you want to
-    // include in your section.
-
-    // we will just claim urls for Yellowstone
+    
     var claimed = options.entries.filter(function(attachment){
-      return attachment.url.indexOf('http://ttp.data') === 0;
+      return attachment.url.indexOf('https://trello.com/c/') === 0;
     });
-
-    // you can have more than one attachment section on a card
-    // you can group items together into one section, have a section
-    // per attachment, or anything in between.
 
     if(claimed && claimed.length > 0){
       console.log('inside')
