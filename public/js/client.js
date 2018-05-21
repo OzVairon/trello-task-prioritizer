@@ -80,15 +80,19 @@ var GLITCH_ICON = './images/glitch.svg';
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
 
+//const BASE_URL = './'
+
+const BASE_URL = '../'
+
+
 var randomBadgeColor = function() {
   return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
 };
 
 var getBadges = function(t){
-  return t.card('name')
-  .get('name')
-  .then(function(cardName){
-    t.card('all').then(result => {console.log(result)})
+
+  retirn Promise.all(t.card('name').get('name'), t.get('card', 'shared', 'effort_hours', 0))
+  .spread(function(cardName, hours){
     return [{
       // its best to use static badges unless you need your badges to refresh
       // you can mix and match between static and dynamic
@@ -97,30 +101,15 @@ var getBadges = function(t){
       icon: GRAY_ICON, // for card front badges only
       color: null
     }, 
-    // {
-    //   // card detail badges (those that appear on the back of cards)
-    //   // also support callback functions so that you can open for example
-    //   // open a popup on click
-    //   title: 'Popup Detail Badge', // for detail badges only
-    //   text: 'Popup',
-    //   icon: GRAY_ICON, // for card front badges only
-    //   callback: function(context) { // function to run on click
-    //     return context.popup({
-    //       title: 'Card Detail Badge Popup',
-    //       url: './views/settings.html',
-    //       height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-    //     });
-    //   }
-    // },
     {
       
       title: 'Hours effort', // for detail badges only
-      text: 'Effort',
+      text: hours,
       icon: GRAY_ICON, // for card front badges only
       callback: function(context) { // function to run on click
         return context.popup({
           title: 'Hours effort settings',
-          url: './views/params.html',
+          url: BASE_URL + 'views/params.html',
           height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
         });
       }
@@ -135,7 +124,44 @@ var getBadges = function(t){
       url: 'https://trello.com/home',
       target: 'Trello Landing Page' // optional target for above url
     }];
-  });
+  })
+
+
+  // return t.card('name')
+  // .get('name')
+  // .then(function(cardName){
+  //   return [{
+  //     // its best to use static badges unless you need your badges to refresh
+  //     // you can mix and match between static and dynamic
+  //     title: 'Detail Badge', // for detail badges only
+  //     text: cardName,
+  //     icon: GRAY_ICON, // for card front badges only
+  //     color: null
+  //   }, 
+  //   {
+      
+  //     title: 'Hours effort', // for detail badges only
+  //     text: 'Effort',
+  //     icon: GRAY_ICON, // for card front badges only
+  //     callback: function(context) { // function to run on click
+  //       return context.popup({
+  //         title: 'Hours effort settings',
+  //         url: BASE_URL + 'views/params.html',
+  //         height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+  //       });
+  //     }
+  //   },
+  //    {
+  //     // or for simpler use cases you can also provide a url
+  //     // when the user clicks on the card detail badge they will
+  //     // go to a new tab at that url
+  //     title: 'URL Detail Badge', // for detail badges only
+  //     text: 'URL',
+  //     icon: GRAY_ICON, // for card front badges only
+  //     url: 'https://trello.com/home',
+  //     target: 'Trello Landing Page' // optional target for above url
+  //   }];
+  // });
 };
 
 var boardButtonCallback = function(t){
@@ -146,7 +172,7 @@ var boardButtonCallback = function(t){
         text: 'Open Modal',
         callback: function(t){
           return t.modal({            
-            url: './views/modal.html', // The URL to load for the iframe
+            url: BASE_URL + 'views/modal.html', // The URL to load for the iframe
             args: { text: 'Hello' }, // Optional args to access later with t.arg('text') on './modal.html'
             accentColor: '#ffffff', // Optional color for the modal header 
             height: 500, // Initial height for iframe; not used if fullscreen is true
@@ -251,7 +277,7 @@ TrelloPowerUp.initialize({
         title: 'Example Attachment Section: Yellowstone',
         content: {
           type: 'iframe',
-          url: t.signUrl('./views/section.html', { arg: 'you can pass your section args here' }),
+          url: t.signUrl(BASE_URL + 'views/section.html', { arg: 'you can pass your section args here' }),
           height: 230
         }
       }];
@@ -384,7 +410,7 @@ TrelloPowerUp.initialize({
     // it is the least disruptive, and fits in well with the rest of Trello's UX
     return t.popup({
       title: 'Settings',
-      url: './views/settings.html',
+      url: BASE_URL + 'views/settings.html',
       height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
     });
   },
@@ -431,7 +457,7 @@ TrelloPowerUp.initialize({
       return t.popup({
         title: 'My Auth Popup',
         args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: './views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
         height: 140,
       });
     } else {
