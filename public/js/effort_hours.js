@@ -25,7 +25,7 @@ t.render(function(){
 document.getElementById('save').addEventListener('click', function(){
   console.log(hoursField.value)
   let data = ''
-  for (let i = 0; i < 4090; i++) {
+  for (let i = 0; i < 2000; i++) {
     data += 'a'
   }
   //return t.set('card', 'shared', 'effort_hours', hoursField.value)
