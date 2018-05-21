@@ -309,7 +309,7 @@ TrelloPowerUp.initialize({
     }];
   },
   'card-badges': function(t, options){
-    return getBadges(t);
+    return getBadges(t, false);
   },
   'card-buttons': function(t, options) {
     return [{
@@ -327,7 +327,7 @@ TrelloPowerUp.initialize({
     }];
   },
   'card-detail-badges': function(t, options) {
-    return getBadges(t);
+    return getBadges(t, true);
   },
   'card-from-url': function(t, options) {
     // options.url has the url in question
