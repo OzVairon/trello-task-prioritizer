@@ -8,7 +8,7 @@ var hoursField = document.getElementById('hours');
 
 t.render(function(){
   return Promise.all([
-    t.get('card', 'shared', 'fruit')
+    t.get('card', 'shared', 'effort_hours')
   ])
   .spread(function(hours_data){
     console.log(hours_data)
