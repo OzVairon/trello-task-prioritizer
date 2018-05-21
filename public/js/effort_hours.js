@@ -24,7 +24,20 @@ t.render(function(){
 
 document.getElementById('save').addEventListener('click', function(){
   console.log(hoursField.value)
-  return t.set('card', 'shared', 'effort_hours', hoursField.value)
+  let data = ''
+  for (let i = 0; i < 4090; i++) {
+    data += 'a'
+  }
+  //return t.set('card', 'shared', 'effort_hours', hoursField.value)
+  return t.set('card', 'shared', 'testing_data', hoursField.value)
+  .then(function(){
+    t.closePopup();
+  })
+})
+
+document.getElementById('clear').addEventListener('click', function(){
+  
+  return t.remove('card', 'shared', 'testing_data')
   .then(function(){
     t.closePopup();
   })
