@@ -215,7 +215,7 @@ TrelloPowerUp.initialize({
 
     // we will just claim urls for Yellowstone
     var claimed = options.entries.filter(function(attachment){
-      return attachment.url.indexOf('ttp.data') === 0;
+      return attachment.url.indexOf('http://ttp.data') === 0;
     });
 
     // you can have more than one attachment section on a card
