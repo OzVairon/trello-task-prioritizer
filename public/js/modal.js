@@ -5,6 +5,9 @@ var t = TrelloPowerUp.iframe();
 // you can access arguments passed to your iframe like so
 var num = t.arg('rand');
 console.log(t.arg('text'))
+
+
+t.board('name').then(result=> {console.log(result)})
 console.log('Название доски: ' + t.board('name'))
 
 t.render(function(){
