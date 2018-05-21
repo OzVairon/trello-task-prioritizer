@@ -29,13 +29,14 @@ document.getElementById('save').addEventListener('click', function(){
     data += 'a'
   }
   //return t.set('card', 'shared', 'effort_hours', hoursField.value)
-  return t.set('card', 'shared', 'testing_data', hoursField.value)
+  return t.set('card', 'shared', 'testing_data', data)
   .then(function(){
-    t.closePopup();
-  }, function(){
-    console.log('rejected')
-    alert('rejected')
-  })
+      t.closePopup();
+    }, function(){
+      console.log('rejected')
+      alert('rejected')
+    }
+  )
 })
 
 document.getElementById('clear').addEventListener('click', function(){
@@ -44,4 +45,10 @@ document.getElementById('clear').addEventListener('click', function(){
   .then(function(){
     t.closePopup();
   })
+
+})
+
+
+document.getElementById('show').addEventListener('click', function(){
+    return t.get('card', 'shared', 'testing_data').then((t) => {console.log(t)})
 })
