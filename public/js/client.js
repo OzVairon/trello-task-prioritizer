@@ -91,20 +91,12 @@ var randomBadgeColor = function() {
 
 var getBadges = function(t){
 
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours', 0)])
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours', '0')])
   .spread(function(cardName, hours){
-    return [{
-      // its best to use static badges unless you need your badges to refresh
-      // you can mix and match between static and dynamic
-      title: 'Detail Badge', // for detail badges only
-      text: cardName,
-      icon: GRAY_ICON, // for card front badges only
-      color: null
-    }, 
+    return [
     {
-      
       title: 'Hours effort', // for detail badges only
-      text: hours,
+      text: hours + 'h',
       icon: GRAY_ICON, // for card front badges only
       callback: function(context) { // function to run on click
         return context.popup({
@@ -113,17 +105,8 @@ var getBadges = function(t){
           height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
         });
       }
-    },
-     {
-      // or for simpler use cases you can also provide a url
-      // when the user clicks on the card detail badge they will
-      // go to a new tab at that url
-      title: 'URL Detail Badge', // for detail badges only
-      text: 'URL',
-      icon: GRAY_ICON, // for card front badges only
-      url: 'https://trello.com/home',
-      target: 'Trello Landing Page' // optional target for above url
-    }];
+    }
+    ];
   })
 
 
