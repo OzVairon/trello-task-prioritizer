@@ -32,6 +32,9 @@ document.getElementById('save').addEventListener('click', function(){
   return t.set('card', 'shared', 'testing_data', hoursField.value)
   .then(function(){
     t.closePopup();
+  }, function(){
+    console.log('rejected')
+    alert('rejected')
   })
 })
 
