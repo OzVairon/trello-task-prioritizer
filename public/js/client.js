@@ -341,19 +341,19 @@ TrelloPowerUp.initialize({
     // we can let Trello know like so:
     // throw t.NotHandled();
   },
-  'format-url': function(t, options) {
-    // options.url has the url that we are being asked to format
-    // in our response we can include an icon as well as the replacement text
+  // 'format-url': function(t, options) {
+  //   // options.url has the url that we are being asked to format
+  //   // in our response we can include an icon as well as the replacement text
     
-    return {
-      icon: GRAY_ICON, // don't use a colored icon here
-      text: '👉 ' + options.url + ' 👈' 
-    };
+  //   return {
+  //     icon: GRAY_ICON, // don't use a colored icon here
+  //     text: '👉 ' + options.url + ' 👈' 
+  //   };
     
-    // if we don't actually have any valuable information about the url
-    // we can let Trello know like so:
-    // throw t.NotHandled();
-  },
+  //   // if we don't actually have any valuable information about the url
+  //   // we can let Trello know like so:
+  //   // throw t.NotHandled();
+  // },
   'show-settings': function(t, options){
     // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
     // what should Trello show. We highly recommend the popup in this case as
