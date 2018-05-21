@@ -32,9 +32,9 @@ document.getElementById('save').addEventListener('click', function(){
   return t.set('card', 'shared', 'testing_data', data)
   .then(function(){
       t.closePopup();
-    }, function(){
+    }, function(err){
       console.log('rejected')
-      alert('rejected')
+      alert(err.message)
     }
   )
 })
