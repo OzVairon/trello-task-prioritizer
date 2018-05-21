@@ -221,8 +221,7 @@ TrelloPowerUp.initialize({
     // you can have more than one attachment section on a card
     // you can group items together into one section, have a section
     // per attachment, or anything in between.
-    console.log(claimed)
-    console.log(claimed.length)
+
     if(claimed && claimed.length > 0){
       console.log('inside')
       // if the title for your section requires a network call or other
@@ -236,7 +235,7 @@ TrelloPowerUp.initialize({
         title: 'Example Attachment Section: Yellowstone',
         content: {
           type: 'iframe',
-          url: t.signUrl(BASE_URL + 'views/section.html', { arg: 'you can pass your section args here' }),
+          url: BASE_URL + 'views/section.html',
           height: 230
         }
       }];
