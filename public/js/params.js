@@ -23,6 +23,9 @@ t.render(function(){
 });
 
 document.getElementById('save').addEventListener('click', function(){
+  console.log(hoursField.value)
+  console.log(hoursField.value())
+  console.log(hoursField.val())
   return t.set('card', 'shared', 'effort_hours', hoursField.value)
   .then(function(){
     t.closePopup();
