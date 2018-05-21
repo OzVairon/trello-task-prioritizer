@@ -80,9 +80,9 @@ var GLITCH_ICON = './images/glitch.svg';
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
 
-//const BASE_URL = './'
+const BASE_URL = './'
 
-const BASE_URL = '../'
+//const BASE_URL = '../'
 
 
 var randomBadgeColor = function() {
