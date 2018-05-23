@@ -274,45 +274,17 @@ TrelloPowerUp.initialize({
   
   'board-buttons': function(t, options){
     return [{
-      // we can either provide a button that has a callback function
-      // that callback function should probably open a popup, overlay, or boardBar
       icon: WHITE_ICON,
-      text: 'Popup OZV',
+      text: 'Task Prioritizer',
       callback: boardButtonCallback
     }];
   },
   'card-badges': function(t, options){
     return getBadges(t, false);
   },
-  'card-buttons': function(t, options) {
-    return [{
-      // usually you will provide a callback function to be run on button click
-      // we recommend that you use a popup on click generally
-      icon: GRAY_ICON, // don't use a colored icon here
-      text: 'TP: Добавить параметры',
-      callback: cardButtonCallback
-    }];
-  },
+  
   'card-detail-badges': function(t, options) {
     return getBadges(t, true);
-  },
-  'card-from-url': function(t, options) {
-    // options.url has the url in question
-    // if we know cool things about that url we can give Trello a name and desc
-    // to use when creating a card. Trello will also automatically add that url
-    // as an attachment to the created card
-    // As always you can return a Promise that resolves to the card details
-    
-    return new Promise(function(resolve) {
-      resolve({
-        name: '💻 ' + options.url + ' 🤔',
-        desc: 'This Power-Up knows cool things about the attached url'
-      });
-    });
-    
-    // if we don't actually have any valuable information about the url
-    // we can let Trello know like so:
-    // throw t.NotHandled();
   },
  
   'show-settings': function(t, options){
