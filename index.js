@@ -20,8 +20,8 @@ app.get('/numeric', (req, res) => {
   	console.log('try to render numeric form')
 
   	let data = {
-  		value: req.queue.value,
-  		name: req.queue.name
+  		value: req.query.value,
+  		name: req.query.name
   	};
 
   	res.render('pages/numeric_form', {data: data})

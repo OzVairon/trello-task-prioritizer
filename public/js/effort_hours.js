@@ -3,7 +3,7 @@
 var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
-var hoursField = document.getElementById('hours');
+var field = document.getElementById('number_field');
 
 
 t.render(function(){

@@ -107,7 +107,7 @@ var getBadges = function(t, isDetailed){
             return context.popup({
               title: 'Hours effort settings',
               //url: BASE_URL + 'views/effort_hours.html',
-              url: BASE_URL + 'numeric?val=' + hours + '&name=' + 'Expected number of hours',
+              url: BASE_URL + 'numeric?value=' + hours + '&name=' + 'Expected number of hours',
               height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
             });
           }
