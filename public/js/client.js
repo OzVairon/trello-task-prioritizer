@@ -92,7 +92,7 @@ var randomBadgeColor = function() {
 var getBadges = function(t, isDetailed){
   return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due')])
   .spread(function(cardName, hours, due){
-    console.log(due)
+    console.log(moment.utc(due.due))
 
     let result = [];
 
