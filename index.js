@@ -10,7 +10,7 @@ express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 express()
-  .get('/numeric', (res, req) => {
-  	console.lgo('try to render numeric form')
+  .get('/numeric', (req, res) => {
+  	console.log('try to render numeric form')
   	res.render('pages/numeric_form')
   })
