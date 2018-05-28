@@ -5,10 +5,13 @@
   </head>
   <body>
     <div id="content">
-      <p>NUMERIC FORM</p>
-      <input id='numeric_form' type="text" name="hours">
+      <p>{%= data.description %}</p>
+      <input id='numeric_field' type="text" name="numeric_field">
       <button id="save" class="mod-primary">Save</button>
     </div>
+    <script type='text/javascript'>
+      let key = {%= data.key %}
+    </script>
     <script type='text/javascript' src="/js/effort_hours.js"></script>
   </body>
 </html>

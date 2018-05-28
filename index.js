@@ -21,10 +21,16 @@ app.get('/numeric', (req, res) => {
 
   	let data = {
   		value: req.query.value,
-  		name: req.query.name
+  		description: req.query.description
   	};
 
   	res.render('pages/numeric_form', {data: data})
+  })
+
+app.get('/settings', (req, res) => {
+  	console.log('render modal')
+
+  	res.render('pages/modal')
   })
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 

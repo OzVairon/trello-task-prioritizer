@@ -90,7 +90,6 @@ var randomBadgeColor = function() {
 };
 
 var getBadges = function(t, isDetailed){
-
   return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours')])
   .spread(function(cardName, hours){
 
@@ -107,7 +106,7 @@ var getBadges = function(t, isDetailed){
             return context.popup({
               title: 'Hours effort settings',
               //url: BASE_URL + 'views/effort_hours.html',
-              url: BASE_URL + 'numeric?value=' + hours + '&name=' + 'Expected number of hours',
+              url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
               height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
             });
           }
@@ -117,31 +116,18 @@ var getBadges = function(t, isDetailed){
     
     return result;
   })
-
 };
 
-var boardButtonCallback = function(t){
-  return t.popup({
-    title: 'Popup List Example',
-    items: [
-      {
-        text: 'Open Modal',
-        callback: function(t){
-          return t.modal({            
-            url: BASE_URL + 'views/modal.html', // The URL to load for the iframe
-            args: { text: 'Hello' }, // Optional args to access later with t.arg('text') on './modal.html'
-            accentColor: '#ffffff', // Optional color for the modal header 
-            height: 500, // Initial height for iframe; not used if fullscreen is true
-            fullscreen: false, // Whether the modal should stretch to take up the whole screen
-            //callback: () => console.log('Goodbye.'), // optional function called if user closes modal (via `X` or escape)
-            title: 'Настройте веса для критериев', // Optional title for modal header
-            // You can add up to 3 action buttons on the modal header - max 1 on the right side.
-            actions: []
-          })
-        }
-      }
-    ]
-  });
+var boardButtonCallback = function(t){  
+  return t.modal({            
+    url: BASE_URL + '/settings', // The URL to load for the iframe
+    accentColor: '#ffffff', // Optional color for the modal header 
+    height: 500, // Initial height for iframe; not used if fullscreen is true
+    fullscreen: false, // Whether the modal should stretch to take up the whole screen
+    //callback: () => console.log('Goodbye.'), // optional function called if user closes modal (via `X` or escape)
+    title: 'Настройки плагина', // Optional title for modal header
+    
+  })        
 };
 
 var cardButtonCallback = function(t){
