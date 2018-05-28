@@ -120,7 +120,7 @@ var getBadges = function(t, isDetailed){
 
 var boardButtonCallback = function(t){  
   return t.modal({            
-    url: BASE_URL + '/settings', // The URL to load for the iframe
+    url: BASE_URL + 'settings', // The URL to load for the iframe
     accentColor: '#ffffff', // Optional color for the modal header 
     height: 500, // Initial height for iframe; not used if fullscreen is true
     fullscreen: false, // Whether the modal should stretch to take up the whole screen
