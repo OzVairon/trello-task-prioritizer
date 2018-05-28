@@ -20,7 +20,7 @@ app.get('/numeric', (req, res) => {
   	console.log('try to render numeric form')
 
   	let data = {
-  		value: req.query.value,
+  		key: req.query.key,
   		description: req.query.description
   	};
 
@@ -29,7 +29,6 @@ app.get('/numeric', (req, res) => {
 
 app.get('/settings', (req, res) => {
   	console.log('render modal')
-
   	res.render('pages/modal')
   })
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
