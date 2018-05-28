@@ -7,8 +7,10 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/numeric', (res, req) => {
-  	res.render('pages/numeric_form')
-  })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
+express()
+  .get('/numeric', (res, req) => {
+  	console.lgo('try to render numeric form')
+  	res.render('pages/numeric_form')
+  })
