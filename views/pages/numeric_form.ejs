@@ -5,12 +5,12 @@
   </head>
   <body>
     <div id="content">
-      <p>{%= data.description %}</p>
+      <p><%= data.description %></p>
       <input id='numeric_field' type="text" name="numeric_field">
       <button id="save" class="mod-primary">Save</button>
     </div>
     <script type='text/javascript'>
-      let key = {%= data.key %}
+      let key = <%= data.key %>
     </script>
     <script type='text/javascript' src="/js/effort_hours.js"></script>
   </body>
