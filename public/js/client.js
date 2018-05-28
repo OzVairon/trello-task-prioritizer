@@ -90,8 +90,9 @@ var randomBadgeColor = function() {
 };
 
 var getBadges = function(t, isDetailed){
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours')])
-  .spread(function(cardName, hours){
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due')])
+  .spread(function(cardName, hours, due){
+    console.log(due)
 
     let result = [];
 
@@ -117,6 +118,10 @@ var getBadges = function(t, isDetailed){
     return result;
   })
 };
+
+function get_working_hours(deadline) {
+
+}
 
 var boardButtonCallback = function(t){  
   return t.modal({            
