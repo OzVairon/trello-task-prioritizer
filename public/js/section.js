@@ -33,4 +33,5 @@ function render_func() {
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   render_func()
+  console.log('attachment ready')
 });
