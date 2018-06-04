@@ -6,6 +6,12 @@ var t = TrelloPowerUp.iframe();
 var arg = t.arg('arg');
 
 t.render(function(){
+  render_func()
+});
+
+
+function render_func() {
+  console.log('attachment render')
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
   // from your section
@@ -22,4 +28,8 @@ t.render(function(){
   .then(function(){
     return t.sizeTo('#content');
   });
+}
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  render_func()
 });
