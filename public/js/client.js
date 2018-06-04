@@ -254,7 +254,7 @@ TrelloPowerUp.initialize({
     });
 
     if(claimed && claimed.length > 0){
-      console.log('inside')
+
       // if the title for your section requires a network call or other
       // potentially length operation you can provide a function for the title
       // that returns the section title. If you do so, provide a unique id for
@@ -271,7 +271,6 @@ TrelloPowerUp.initialize({
         }
       }];
     } else {
-      console.log('inside else')
       return [];
     }
   },
