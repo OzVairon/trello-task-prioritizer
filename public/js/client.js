@@ -94,6 +94,8 @@ var getBadges = function(t, isDetailed){
   .spread(function(cardName, hours, due){
     console.log(moment.utc(due.due))
 
+
+
     let result = [];
 
     if (isDetailed || hours) {
@@ -114,13 +116,59 @@ var getBadges = function(t, isDetailed){
         }
         )
     }
+
+    result.push(
+    {
+      title: 'Related cards', 
+          text: 'related',
+          icon: GRAY_ICON, 
+          callback: function(context) { // function to run on click
+            return context.popup({
+              title: 'Add related card',
+              //url: BASE_URL + 'views/effort_hours.html',
+              //url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+              height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+            });
+          }
+    }
+    )
+    
     
     return result;
   })
 };
 
-function get_working_hours(deadline) {
+function workingHoursBetweenDates(startDate, endDate, dayStart, dayEnd, includeWeekends) {  
+    // Store minutes worked
+    var minutesWorked = 0;
 
+    // Validate input
+    if (endDate < startDate) { return 0; }
+
+    // Loop from your Start to End dates (by hour)
+    var current = startDate;
+
+    // Define work range
+    var workHoursStart = dayStart;
+    var workHoursEnd = dayEnd;
+
+    // Loop while currentDate is less than end Date (by minutes)
+    while(current <= endDate){      
+        // Store the current time (with minutes adjusted)
+        var currentTime = current.getHours() + (current.getMinutes() / 60);
+
+        // Is the current time within a work day (and if it
+        // occurs on a weekend or not)                   
+        if(currentTime >= workHoursStart && currentTime < workHoursEnd && (includeWeekends ? current.getDay() !== 0 && current.getDay() !== 6 : true)){
+              minutesWorked++;
+        }
+
+        // Increment current time
+        current.setTime(current.getTime() + 1000 * 60);
+    }
+
+    // Return the number of hours
+    return (minutesWorked / 60).toFixed(2);
 }
 
 var boardButtonCallback = function(t){  
@@ -212,10 +260,10 @@ TrelloPowerUp.initialize({
       // that returns the section title. If you do so, provide a unique id for
       // your section
       return [{
-        id: 'Yellowstone', // optional if you aren't using a function for the title
+        id: 'RelatedCards', // optional if you aren't using a function for the title
         claimed: claimed,
         icon: GLITCH_ICON,
-        title: 'Example Attachment Section: Yellowstone',
+        title: 'Related cards',
         content: {
           type: 'iframe',
           url: BASE_URL + 'views/section.html',

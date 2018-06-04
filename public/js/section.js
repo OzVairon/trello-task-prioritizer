@@ -14,8 +14,9 @@ t.render(function(){
   .filter(function(attachment){
     return attachment.url.indexOf('https://trello.com/c/') == 0;
   })
-  .then(function(yellowstoneAttachments){
-    var urls = yellowstoneAttachments.map(function(a){ return a.url; });
+  .then(function(cards){
+    console.log(cards)
+    var urls = cards.map(function(a){ return a.url; });
     document.getElementById('urls').textContent = urls.join(', ');
   })
   .then(function(){
