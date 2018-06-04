@@ -18,6 +18,7 @@ function render_func() {
   t.card('attachments')
   .get('attachments')
   .filter(function(attachment){
+    console.log(attachment)
     return attachment.url.indexOf('https://trello.com/c/') == 0;
   })
   .then(function(cards){
