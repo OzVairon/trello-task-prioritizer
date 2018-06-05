@@ -19,7 +19,7 @@ function render_func() {
   console.log(t)
 
   console.log('promice object')
-  console.log(t.card('all'))
+  console.log(t.card('attachments'))
 
   t.card('attachments')
   .then(a => console.log("a: " + a))
