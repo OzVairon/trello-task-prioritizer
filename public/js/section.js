@@ -22,7 +22,7 @@ function render_func() {
   console.log(t.card('all'))
 
   t.card('attachments')
-  .then(a => console.log(a))
+  .then(a => console.log("a: " + a))
   .get('attachments')
   .filter(function(attachment){
     return attachment.url.indexOf('https://trello.com/c/') == 0;
