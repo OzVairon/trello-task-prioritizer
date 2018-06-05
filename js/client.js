@@ -76,7 +76,9 @@ t.getAll();
 */
 
 //const BASE_URL = './'
-const BASE_URL = '/public/'
+const BASE_URL = './public/'
+
+const RES = BASE_URL + 'public'
 //const BASE_URL = '../'
 
 var GLITCH_ICON = BASE_URL + 'images/glitch.svg';
