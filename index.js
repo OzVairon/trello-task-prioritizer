@@ -27,7 +27,7 @@ app.get('/numeric', (req, res) => {
   	res.render('pages/numeric_form', {data: data})
 	})
 	
-	app.get('/numeric', (req, res) => {
+	app.get('/section', (req, res) => {
   	console.log('render section')
   	res.render('pages/section')
   })
