@@ -16,6 +16,8 @@ function render_func() {
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
   // from your section
+  console.log(t.card('all'));
+
   t.card('all')
     .then(function (card) {
       console.log(card);
