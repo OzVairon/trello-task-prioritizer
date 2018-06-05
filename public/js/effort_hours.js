@@ -1,9 +1,9 @@
 /* global TrelloPowerUp */
 
-var Promise = TrelloPowerUp.Promise;
-var t = TrelloPowerUp.iframe();
+let Promise = TrelloPowerUp.Promise;
+let t = TrelloPowerUp.iframe();
 
-var field = document.getElementById('numeric_field');
+let field = document.getElementById('numeric_field');
 
 
 t.render(function(){
