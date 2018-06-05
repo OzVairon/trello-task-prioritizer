@@ -1,6 +1,6 @@
 /* global TrelloPowerUp */
 let t = TrelloPowerUp.iframe();
-console.log(t.getContext())
+
 t.render(function render() {
   t.card('attachments')
     .get('attachments')
@@ -19,3 +19,7 @@ function render_func() {
   console.log('promice object')
   console.log(t.card('attachments'))
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  console.log(t.getContext())
+});
