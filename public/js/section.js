@@ -79,11 +79,3 @@ function render_func() {
   //   return t.sizeTo('#content');
   // });
 }
-
-document.addEventListener("DOMContentLoaded", function(event) { 
-  console.log('ready render')
-  console.log(t)
-  console.log()
-  t.render
-  //render_func()
-});
