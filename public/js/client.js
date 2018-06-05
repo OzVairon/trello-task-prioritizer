@@ -261,7 +261,7 @@ TrelloPowerUp.initialize({
         title: 'Related cards',
         content: {
           type: 'iframe',
-          url: BASE_URL + 'section.html',
+          url: BASE_URL + 'section',
           height: 230
         }
       }];
