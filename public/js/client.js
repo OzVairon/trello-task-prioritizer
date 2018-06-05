@@ -254,11 +254,6 @@ TrelloPowerUp.initialize({
     });
 
     if(claimed && claimed.length > 0){
-
-      // if the title for your section requires a network call or other
-      // potentially length operation you can provide a function for the title
-      // that returns the section title. If you do so, provide a unique id for
-      // your section
       return [{
         id: 'RelatedCards', // optional if you aren't using a function for the title
         claimed: claimed,
@@ -266,7 +261,7 @@ TrelloPowerUp.initialize({
         title: 'Related cards',
         content: {
           type: 'iframe',
-          url: BASE_URL + 'views/section.html',
+          url: BASE_URL + 'section.html',
           height: 230
         }
       }];

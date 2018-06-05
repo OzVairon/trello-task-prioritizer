@@ -25,6 +25,11 @@ app.get('/numeric', (req, res) => {
   	};
 
   	res.render('pages/numeric_form', {data: data})
+	})
+	
+	app.get('/numeric', (req, res) => {
+  	console.log('render section')
+  	res.render('pages/section')
   })
 
 app.get('/settings', (req, res) => {
