@@ -144,13 +144,19 @@ var getBadges = function(t, isDetailed){
         title: 'Related cards', 
         text: 'related',
         icon: GRAY_ICON, 
-        items: items,
-        search: {
-          count: 5, // How many items to display at a time
-          placeholder: 'Search National Parks',
-          empty: 'No parks found'
-          
+        callback: function(context) { // function to run on click
+          return context.popup({
+            title: 'Hours effort settings',
+            items: items,
+              search: {
+                count: 5, // How many items to display at a time
+                placeholder: 'Search National Parks',
+                empty: 'No parks found'
+                
+              }
+          });
         }
+        
         // callback: function(context) { // function to run on click
         //   return context.popup({
         //     title: 'Add related card',
