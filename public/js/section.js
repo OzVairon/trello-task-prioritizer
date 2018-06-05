@@ -18,9 +18,9 @@ function render_func() {
   // from your section
   t.card('all').then(function (card) {
     console.log(card);
-  }).catch(error){
+  }).catch((error) => {
     console.log(error)
-  }
+  })
   // .get('attachments')
   // .filter(function(attachment){
   //   console.log(attachment)
