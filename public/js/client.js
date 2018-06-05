@@ -247,33 +247,33 @@ TrelloPowerUp.initialize({
   // If you need to make an asynchronous request or action before you can reply to Trello
   // you can return a Promise (bluebird promises are included at TrelloPowerUp.Promise)
   // The Promise should resolve to the object type that is expected to be returned
-  'attachment-sections': function(t, options){
+  // 'attachment-sections': function(t, options){
     
-    var claimed = options.entries.filter(function(attachment){
-      return attachment.url.indexOf('https://trello.com/c/') === 0;
-    });
+  //   var claimed = options.entries.filter(function(attachment){
+  //     return attachment.url.indexOf('https://trello.com/c/') === 0;
+  //   });
 
-    if(claimed && claimed.length > 0){
+  //   if(claimed && claimed.length > 0){
 
-      // if the title for your section requires a network call or other
-      // potentially length operation you can provide a function for the title
-      // that returns the section title. If you do so, provide a unique id for
-      // your section
-      return [{
-        id: 'RelatedCards', // optional if you aren't using a function for the title
-        claimed: claimed,
-        icon: GLITCH_ICON,
-        title: 'Related cards',
-        content: {
-          type: 'iframe',
-          url: BASE_URL + 'views/section.html',
-          height: 230
-        }
-      }];
-    } else {
-      return [];
-    }
-  },
+  //     // if the title for your section requires a network call or other
+  //     // potentially length operation you can provide a function for the title
+  //     // that returns the section title. If you do so, provide a unique id for
+  //     // your section
+  //     return [{
+  //       id: 'RelatedCards', // optional if you aren't using a function for the title
+  //       claimed: claimed,
+  //       icon: GLITCH_ICON,
+  //       title: 'Related cards',
+  //       content: {
+  //         type: 'iframe',
+  //         url: BASE_URL + 'views/section.html',
+  //         height: 230
+  //       }
+  //     }];
+  //   } else {
+  //     return [];
+  //   }
+  // },
   'list-sorters': function (t) {
     return t.list('name', 'id')
     .then(function (list) {
