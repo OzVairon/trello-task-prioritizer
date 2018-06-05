@@ -262,6 +262,10 @@ TrelloPowerUp.initialize({
         content: {
           type: 'iframe',
           url: BASE_URL + 'section',
+
+          url: t.signUrl(BASE_URL + 'section', {
+            arg: t.getContext()
+          }),
           height: 230
         }
       }];

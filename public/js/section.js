@@ -1,6 +1,6 @@
 /* global TrelloPowerUp */
-var t 
-
+var t = TrelloPowerUp.iframe();
+var arg = t.arg('arg');
 // t.render(function render() {
 //   t.card('attachments')
 //     .get('attachments')
@@ -11,8 +11,9 @@ var t
 
 
 document.addEventListener("DOMContentLoaded", function() {
-  t = TrelloPowerUp.iframe();
-
+//  t = TrelloPowerUp.iframe();
+  console.log('arguments')
+  console.log(arg)
   t.render(function render() {
     t.card('attachments')
       .get('attachments')
