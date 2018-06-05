@@ -16,19 +16,22 @@ function render_func() {
   // recall this method as the user adds and removes attachments
   // from your section
   t.card('attachments')
-  .get('attachments')
-  .filter(function(attachment){
-    console.log(attachment)
-    return attachment.url.indexOf('https://trello.com/c/') == 0;
-  })
-  .then(function(cards){
-    console.log(cards)
-    var urls = cards.map(function(a){ return a.url; });
-    document.getElementById('urls').textContent = urls.join(', ');
-  })
-  .then(function(){
-    return t.sizeTo('#content');
+  .then(function (card) {
+    console.log(JSON.stringify(card, null, 2));
   });
+  // .get('attachments')
+  // .filter(function(attachment){
+  //   console.log(attachment)
+  //   return attachment.url.indexOf('https://trello.com/c/') == 0;
+  // })
+  // .then(function(cards){
+  //   console.log(cards)
+  //   var urls = cards.map(function(a){ return a.url; });
+  //   document.getElementById('urls').textContent = urls.join(', ');
+  // })
+  // .then(function(){
+  //   return t.sizeTo('#content');
+  // });
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
