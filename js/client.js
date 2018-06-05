@@ -1,6 +1,5 @@
 /* global TrelloPowerUp */
 
-// we can access Bluebird Promises as follows
 var Promise = TrelloPowerUp.Promise;
 
 /*
@@ -76,13 +75,15 @@ t.getAll();
 
 */
 
-var GLITCH_ICON = './images/glitch.svg';
-var WHITE_ICON = './images/icon-white.svg';
-var GRAY_ICON = './images/icon-gray.svg';
-
-const BASE_URL = './'
-
+//const BASE_URL = './'
+const BASE_URL = '/public/'
 //const BASE_URL = '../'
+
+var GLITCH_ICON = BASE_URL + 'images/glitch.svg';
+var WHITE_ICON = BASE_URL + 'images/icon-white.svg';
+var GRAY_ICON = BASE_URL + 'images/icon-gray.svg';
+
+
 
 
 var randomBadgeColor = function() {
@@ -90,7 +91,7 @@ var randomBadgeColor = function() {
 };
 
 var getBadges = function(t, isDetailed){
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due')])
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due'),])
   .spread(function(cardName, hours, due){
     //console.log(moment.utc(due.due))
 
@@ -109,7 +110,8 @@ var getBadges = function(t, isDetailed){
             return context.popup({
               title: 'Hours effort settings',
               //url: BASE_URL + 'views/effort_hours.html',
-              url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+              //url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+              url: BASE_URL + 'numeric.html' ,//+ '?description=' + 'Expected number of hours' + '&key=effort_hours',
               height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
             });
           }
@@ -118,19 +120,22 @@ var getBadges = function(t, isDetailed){
     }
 
     result.push(
-    {
-      title: 'Related cards', 
-          text: 'related',
-          icon: GRAY_ICON, 
-          callback: function(context) { // function to run on click
-            return context.popup({
-              title: 'Add related card',
-              //url: BASE_URL + 'views/effort_hours.html',
-              //url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-              height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-            });
-          }
-    }
+      {
+        title: 'Related cards', 
+            text: 'related',
+            icon: GRAY_ICON, 
+            callback: function(context) { // function to run on click
+              return context.popup({
+                title: 'Add related card',
+                items: t.cards('id'),
+                search: {
+                  count: 5, // How many items to display at a time
+                  placeholder: 'Board cards',
+                  empty: 'No cards found'
+                }
+              });
+            }
+      }
     )
     
     
@@ -183,32 +188,6 @@ var boardButtonCallback = function(t){
   })        
 };
 
-var cardButtonCallback = function(t){
-  // Trello Power-Up Popups are actually pretty powerful
-  // Searching is a pretty common use case, so why reinvent the wheel
-  var items = ['acad', 'arch', 'badl', 'crla', 'grca', 'yell', 'yose'].map(function(parkCode){
-    var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
-    var nameForCode = '🏞 ' + parkCode.toUpperCase();
-    return {
-      text: nameForCode,
-      url: urlForCode,
-      callback: function(t){
-        // In this case we want to attach that park to the card as an attachment
-        // but first let's ensure that the user can write on this model
-        if (t.memberCanWriteToModel('card')){
-          return t.attach({ url: urlForCode, name: nameForCode })
-          .then(function(){
-            // once that has completed we should tidy up and close the popup
-            return t.closePopup();
-          });
-        } else {
-          console.log("Oh no! You don't have permission to add attachments to this card.")
-          return t.closePopup(); // We're just going to close the popup for now.
-        };
-      }
-    };
-  });
-
   // we could provide a standard iframe popup, but in this case we
   // will let Trello do the heavy lifting
   return t.popup({
@@ -239,7 +218,6 @@ var cardButtonCallback = function(t){
     }
   });
   */
-};
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
@@ -261,9 +239,9 @@ TrelloPowerUp.initialize({
         title: 'Related cards',
         content: {
           type: 'iframe',
-          url: BASE_URL + 'section',
+          //url: BASE_URL + 'section.html',
 
-          url: t.signUrl(BASE_URL + 'section'),
+          url: t.signUrl(BASE_URL + 'section.html'),
           height: 230
         }
       }];
@@ -271,6 +249,7 @@ TrelloPowerUp.initialize({
       return [];
     }
   },
+
   'list-sorters': function (t) {
     return t.list('name', 'id')
     .then(function (list) {
@@ -322,67 +301,7 @@ TrelloPowerUp.initialize({
   'card-detail-badges': function(t, options) {
     return getBadges(t, true);
   },
- 
-  'show-settings': function(t, options){
-    // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
-    // what should Trello show. We highly recommend the popup in this case as
-    // it is the least disruptive, and fits in well with the rest of Trello's UX
-    return t.popup({
-      title: 'Settings',
-      url: BASE_URL + 'views/settings.html',
-      height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-    });
-  },
   
-  /*        
-      
-      🔑 Authorization Capabiltiies 🗝
-      
-      The following two capabilities should be used together to determine:
-      1. whether a user is appropriately authorized
-      2. what to do when a user isn't completely authorized
-      
-  */
-  'authorization-status': function(t, options){
-    // Return a promise that resolves to an object with a boolean property 'authorized' of true or false
-    // The boolean value determines whether your Power-Up considers the user to be authorized or not.
-    
-    // When the value is false, Trello will show the user an "Authorize Account" options when
-    // they click on the Power-Up's gear icon in the settings. The 'show-authorization' capability
-    // below determines what should happen when the user clicks "Authorize Account"
-    
-    // For instance, if your Power-Up requires a token to be set for the member you could do the following:
-    return t.get('member', 'private', 'token')
-    .then(function(token){
-      if(token){
-        return { authorized: true };
-      }
-      return { authorized: false };
-    });
-    // You can also return the object synchronously if you know the answer synchronously.
-  },
-  'show-authorization': function(t, options){
-    // Returns what to do when a user clicks the 'Authorize Account' link from the Power-Up gear icon
-    // which shows when 'authorization-status' returns { authorized: false }.
-    
-    // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
-    // you'll need to add your API from trello.com/app-key below:
-    let trelloAPIKey = '1bd6eb54b14babeeb34032a923075fbb';
-    // This key will be used to generate a token that you can pass along with the API key to Trello's
-    // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
-    
-    // In this case we'll open a popup to kick off the authorization flow.
-    if (trelloAPIKey) {
-      return t.popup({
-        title: 'My Auth Popup',
-        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
-        height: 140,
-      });
-    } else {
-      console.log("🙈 Looks like you need to add your API key to the project!");
-    }
-  }
 });
 
 console.log('Loaded by: ' + document.referrer);
