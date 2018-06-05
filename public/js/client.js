@@ -90,8 +90,8 @@ var randomBadgeColor = function() {
 };
 
 var getBadges = function(t, isDetailed){
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due', 'attachments')])
-  .spread(function(cardName, hours, due, attachments){
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due'), t.cards('all')])
+  .spread(function(cardName, hours, due, cards){
     //console.log(moment.utc(due.due))
     let result = [];
     if (isDetailed || hours) {
@@ -112,6 +112,31 @@ var getBadges = function(t, isDetailed){
         }
         )
     }
+
+    console.log(cards)
+
+
+    let items = cards.map(
+      function(card){
+        var urlForCode = card.url;
+        var nameForCode = '🏞 ' + card.name;
+        return {
+          text: nameForCode,
+          url: urlForCode,
+          callback: function(t){
+            console.log(nameForCode)
+            if (t.memberCanWriteToModel('card')){
+              return t.attach({ url: urlForCode, name: nameForCode })
+              .then(function(){
+                return t.closePopup();
+              });
+            } else {
+              console.log("Oh no! You don't have permission to add attachments to this card.")
+              return t.closePopup(); // We're just going to close the popup for now.
+            };
+          }
+        };
+      });
 
 
     result.push(
@@ -137,15 +162,15 @@ var getBadges = function(t, isDetailed){
     )
 
     
-    return t.popup({
-      title: 'Popup Search Example',
-      items: items, // Trello will search client-side based on the text property of the items
-      search: {
-        count: 5, // How many items to display at a time
-        placeholder: 'Search National Parks',
-        empty: 'No parks found'
-      }
-    });
+    // return t.popup({
+    //   title: 'Popup Search Example',
+    //   items: items, // Trello will search client-side based on the text property of the items
+    //   search: {
+    //     count: 5, // How many items to display at a time
+    //     placeholder: 'Search National Parks',
+    //     empty: 'No parks found'
+    //   }
+    // });
 
 
     return result;
@@ -228,28 +253,29 @@ var boardButtonCallback = function(t){
 var cardButtonCallback = function(t){
   // Trello Power-Up Popups are actually pretty powerful
   // Searching is a pretty common use case, so why reinvent the wheel
-  var items = ['acad', 'arch', 'badl', 'crla', 'grca', 'yell', 'yose'].map(function(parkCode){
-    var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
-    var nameForCode = '🏞 ' + parkCode.toUpperCase();
-    return {
-      text: nameForCode,
-      url: urlForCode,
-      callback: function(t){
-        // In this case we want to attach that park to the card as an attachment
-        // but first let's ensure that the user can write on this model
-        if (t.memberCanWriteToModel('card')){
-          return t.attach({ url: urlForCode, name: nameForCode })
-          .then(function(){
-            // once that has completed we should tidy up and close the popup
-            return t.closePopup();
-          });
-        } else {
-          console.log("Oh no! You don't have permission to add attachments to this card.")
-          return t.closePopup(); // We're just going to close the popup for now.
-        };
-      }
-    };
-  });
+  var items = ['acad', 'arch', 'badl', 'crla', 'grca', 'yell', 'yose'].map(
+    function(parkCode){
+      var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
+      var nameForCode = '🏞 ' + parkCode.toUpperCase();
+      return {
+        text: nameForCode,
+        url: urlForCode,
+        callback: function(t){
+          // In this case we want to attach that park to the card as an attachment
+          // but first let's ensure that the user can write on this model
+          if (t.memberCanWriteToModel('card')){
+            return t.attach({ url: urlForCode, name: nameForCode })
+            .then(function(){
+              // once that has completed we should tidy up and close the popup
+              return t.closePopup();
+            });
+          } else {
+            console.log("Oh no! You don't have permission to add attachments to this card.")
+            return t.closePopup(); // We're just going to close the popup for now.
+          };
+        }
+      };
+    });
 
   // we could provide a standard iframe popup, but in this case we
   // will let Trello do the heavy lifting
