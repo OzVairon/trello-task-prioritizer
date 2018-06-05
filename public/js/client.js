@@ -93,13 +93,9 @@ var getBadges = function(t, isDetailed){
   return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due')])
   .spread(function(cardName, hours, due){
     //console.log(moment.utc(due.due))
-
-
-
     let result = [];
-
     if (isDetailed || hours) {
-      if (hours == undefined) hours = 0;
+      if (hours == undefined) hours = 'not defined';
       result.push(
         {
           title: 'Hours effort', 
@@ -117,26 +113,51 @@ var getBadges = function(t, isDetailed){
         )
     }
 
+
     result.push(
-    {
-      title: 'Related cards', 
-          text: 'related',
-          icon: GRAY_ICON, 
-          callback: function(context) { // function to run on click
-            return context.popup({
-              title: 'Add related card',
-              //url: BASE_URL + 'views/effort_hours.html',
-              //url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-              height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-            });
-          }
-    }
+      {
+        title: 'Related cards', 
+            text: 'related',
+            icon: GRAY_ICON, 
+            callback: function(context) { // function to run on click
+              return context.popup({
+                title: 'Add related card',
+              });
+            }
+      }
     )
-    
-    
     return result;
   })
 };
+
+
+let related_cards_badge = function(t, isDetailed) {
+
+}
+
+var related_cards = function(t, opt) {
+  console.log(opt)
+
+  var claimed = opt.entries.filter(function(attachment){
+    return attachment.url.indexOf('https://trello.com/c/') === 0;
+  });
+
+  if(claimed && claimed.length > 0){
+    return [{
+      id: 'RelatedCards', // optional if you aren't using a function for the title
+      claimed: claimed,
+      icon: GLITCH_ICON,
+      title: 'Related cards',
+      content: {
+        type: 'iframe',
+        url: t.signUrl(BASE_URL + 'section'),
+        height: 230
+      }
+    }];
+  } else {
+    return [];
+  }
+}
 
 function workingHoursBetweenDates(startDate, endDate, dayStart, dayEnd, includeWeekends) {  
     // Store minutes worked
@@ -177,7 +198,6 @@ var boardButtonCallback = function(t){
     accentColor: '#ffffff', // Optional color for the modal header 
     height: 500, // Initial height for iframe; not used if fullscreen is true
     fullscreen: false, // Whether the modal should stretch to take up the whole screen
-    //callback: () => console.log('Goodbye.'), // optional function called if user closes modal (via `X` or escape)
     title: 'Настройки плагина', // Optional title for modal header
     
   })        
@@ -248,28 +268,7 @@ TrelloPowerUp.initialize({
   // you can return a Promise (bluebird promises are included at TrelloPowerUp.Promise)
   // The Promise should resolve to the object type that is expected to be returned
   'attachment-sections': function(t, options){
-    
-    var claimed = options.entries.filter(function(attachment){
-      return attachment.url.indexOf('https://trello.com/c/') === 0;
-    });
-
-    if(claimed && claimed.length > 0){
-      return [{
-        id: 'RelatedCards', // optional if you aren't using a function for the title
-        claimed: claimed,
-        icon: GLITCH_ICON,
-        title: 'Related cards',
-        content: {
-          type: 'iframe',
-          url: BASE_URL + 'section',
-
-          url: t.signUrl(BASE_URL + 'section'),
-          height: 230
-        }
-      }];
-    } else {
-      return [];
-    }
+    related_cards(t, options)
   },
   'list-sorters': function (t) {
     return t.list('name', 'id')
@@ -323,66 +322,7 @@ TrelloPowerUp.initialize({
     return getBadges(t, true);
   },
  
-  'show-settings': function(t, options){
-    // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
-    // what should Trello show. We highly recommend the popup in this case as
-    // it is the least disruptive, and fits in well with the rest of Trello's UX
-    return t.popup({
-      title: 'Settings',
-      url: BASE_URL + 'views/settings.html',
-      height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-    });
-  },
   
-  /*        
-      
-      🔑 Authorization Capabiltiies 🗝
-      
-      The following two capabilities should be used together to determine:
-      1. whether a user is appropriately authorized
-      2. what to do when a user isn't completely authorized
-      
-  */
-  'authorization-status': function(t, options){
-    // Return a promise that resolves to an object with a boolean property 'authorized' of true or false
-    // The boolean value determines whether your Power-Up considers the user to be authorized or not.
-    
-    // When the value is false, Trello will show the user an "Authorize Account" options when
-    // they click on the Power-Up's gear icon in the settings. The 'show-authorization' capability
-    // below determines what should happen when the user clicks "Authorize Account"
-    
-    // For instance, if your Power-Up requires a token to be set for the member you could do the following:
-    return t.get('member', 'private', 'token')
-    .then(function(token){
-      if(token){
-        return { authorized: true };
-      }
-      return { authorized: false };
-    });
-    // You can also return the object synchronously if you know the answer synchronously.
-  },
-  'show-authorization': function(t, options){
-    // Returns what to do when a user clicks the 'Authorize Account' link from the Power-Up gear icon
-    // which shows when 'authorization-status' returns { authorized: false }.
-    
-    // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
-    // you'll need to add your API from trello.com/app-key below:
-    let trelloAPIKey = '1bd6eb54b14babeeb34032a923075fbb';
-    // This key will be used to generate a token that you can pass along with the API key to Trello's
-    // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
-    
-    // In this case we'll open a popup to kick off the authorization flow.
-    if (trelloAPIKey) {
-      return t.popup({
-        title: 'My Auth Popup',
-        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
-        height: 140,
-      });
-    } else {
-      console.log("🙈 Looks like you need to add your API key to the project!");
-    }
-  }
 });
 
 console.log('Loaded by: ' + document.referrer);

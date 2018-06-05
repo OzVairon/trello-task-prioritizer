@@ -76,14 +76,15 @@ t.getAll();
 */
 
 //const BASE_URL = './'
-const BASE_URL = './public/'
+const BASE_URL = './'
 
-const RES = BASE_URL + 'public'
+const RES = BASE_URL + 'public/'
+const VIEWS = BASE_URL + 'views/'
 //const BASE_URL = '../'
 
-var GLITCH_ICON = BASE_URL + 'images/glitch.svg';
-var WHITE_ICON = BASE_URL + 'images/icon-white.svg';
-var GRAY_ICON = BASE_URL + 'images/icon-gray.svg';
+var GLITCH_ICON = RES + 'images/glitch.svg';
+var WHITE_ICON = RES + 'images/icon-white.svg';
+var GRAY_ICON = RES + 'images/icon-gray.svg';
 
 
 
@@ -113,7 +114,7 @@ var getBadges = function(t, isDetailed){
               title: 'Hours effort settings',
               //url: BASE_URL + 'views/effort_hours.html',
               //url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-              url: BASE_URL + 'numeric.html' ,//+ '?description=' + 'Expected number of hours' + '&key=effort_hours',
+              url: VIEWS + 'numeric_form.html' ,//+ '?description=' + 'Expected number of hours' + '&key=effort_hours',
               height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
             });
           }
@@ -243,7 +244,7 @@ TrelloPowerUp.initialize({
           type: 'iframe',
           //url: BASE_URL + 'section.html',
 
-          url: t.signUrl(BASE_URL + 'section.html'),
+          url: t.signUrl(VIEWS + 'section.html'),
           height: 230
         }
       }];
