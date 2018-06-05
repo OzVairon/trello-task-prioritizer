@@ -144,7 +144,7 @@ var getBadges = function(t, isDetailed){
         title: 'Related cards', 
         text: 'related',
         icon: GRAY_ICON, 
-        items: attachments,
+        items: items,
         search: {
           count: 5, // How many items to display at a time
           placeholder: 'Search National Parks',
