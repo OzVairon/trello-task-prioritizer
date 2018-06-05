@@ -90,8 +90,8 @@ var randomBadgeColor = function() {
 };
 
 var getBadges = function(t, isDetailed){
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due')])
-  .spread(function(cardName, hours, due){
+  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due', 'attachments')])
+  .spread(function(cardName, hours, due, attachments){
     //console.log(moment.utc(due.due))
     let result = [];
     if (isDetailed || hours) {
@@ -119,15 +119,35 @@ var getBadges = function(t, isDetailed){
         title: 'Related cards', 
         text: 'related',
         icon: GRAY_ICON, 
-        callback: function(context) { // function to run on click
-          return context.popup({
-            title: 'Add related card',
-            url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-            height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-          });
+        items: attachments,
+        search: {
+          count: 5, // How many items to display at a time
+          placeholder: 'Search National Parks',
+          empty: 'No parks found'
+          
         }
+        // callback: function(context) { // function to run on click
+        //   return context.popup({
+        //     title: 'Add related card',
+        //     url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+        //     height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+        //   });
+        // }
       }
     )
+
+    
+    return t.popup({
+      title: 'Popup Search Example',
+      items: items, // Trello will search client-side based on the text property of the items
+      search: {
+        count: 5, // How many items to display at a time
+        placeholder: 'Search National Parks',
+        empty: 'No parks found'
+      }
+    });
+
+
     return result;
   })
 };
