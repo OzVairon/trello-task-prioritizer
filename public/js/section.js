@@ -16,10 +16,11 @@ function render_func() {
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
   // from your section
-  t.card('all')
-  .then(function (card) {
+  t.card('all').then(function (card) {
     console.log(card);
-  });
+  }).catch(error){
+    console.log(error)
+  }
   // .get('attachments')
   // .filter(function(attachment){
   //   console.log(attachment)
