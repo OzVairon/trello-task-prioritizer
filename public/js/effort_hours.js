@@ -7,6 +7,10 @@ let field = document.getElementById('numeric_field');
 
 
 t.render(function(){
+  console.log('ready')
+  console.log(t)
+  console.log(t.getContext())
+  console.log('ready end')
   return Promise.all([
     t.get('card', 'shared', key)
   ])

@@ -21,5 +21,8 @@ function render_func() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  console.log('ready')
+  console.log(t)
   console.log(t.getContext())
+  console.log('ready end')
 });
