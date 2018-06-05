@@ -21,23 +21,25 @@ function render_func() {
   console.log('promice object')
   console.log(t.card('attachments'))
 
+
+  // .then(a => console.log("a: " + a))
+  // .catch((err)=> {
+  //     console.log('error')
+  //     console.log(err)
+  //   })  
+  
   t.card('attachments')
-  .then(a => console.log("a: " + a))
-  .catch((err)=> {
-      console.log('error')
-      console.log(err)
-    })
-  // .get('attachments')
-  // .filter(function(attachment){
-  //   return attachment.url.indexOf('https://trello.com/c/') == 0;
-  // })
-  // .then(function(yellowstoneAttachments){
-  //   var urls = yellowstoneAttachments.map(function(a){ return a.url; });
-  //   document.getElementById('urls').textContent = urls.join(', ');
-  // })
-  // .then(function(){
-  //   return t.sizeTo('#content');
-  // });
+  .get('attachments')
+  .filter(function(attachment){
+    return attachment.url.indexOf('https://trello.com/c/') == 0;
+  })
+  .then(function(yellowstoneAttachments){
+    var urls = yellowstoneAttachments.map(function(a){ return a.url; });
+    document.getElementById('urls').textContent = urls.join(', ');
+  })
+  .then(function(){
+    return t.sizeTo('#content');
+  });
 
 
   // console.log('attachment render')
