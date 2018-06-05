@@ -3,16 +3,18 @@ var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
 // you can access arguments passed to your iframe like so
-var arg = t.arg('arg');
+//var arg = t.arg('arg');
 
 t.render(function(){
+
+  console.log('t.render')
   render_func()
 });
 
 
 function render_func() {
 
-
+  console.log('render')
   t.card('attachments')
   .get('attachments')
   .filter(function(attachment){
@@ -55,6 +57,6 @@ function render_func() {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-  console.log('attachment ready')
+  console.log('ready render')
   render_func()
 });
