@@ -15,6 +15,12 @@ t.render(function(){
 function render_func() {
 
   console.log('render')
+
+  consoleo.log(t)
+
+  consoleo.log('promice object')
+  console.log(t.card('all'))
+
   t.card('attachments')
   .get('attachments')
   .filter(function(attachment){
