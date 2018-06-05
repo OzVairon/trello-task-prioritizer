@@ -16,10 +16,17 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log(arg)
   t.render(function render() {
     t.card('attachments')
-      .get('attachments')
-      .then(() => {
-        console.log("HUI")
-      })
+    .get('attachments')
+    .filter(function(attachment){
+      return attachment.url.indexOf('https://trello.com/c/') == 0;
+    })
+    .then(function(yellowstoneAttachments){
+      var urls = yellowstoneAttachments.map(function(a){ return a.url; });
+      document.getElementById('urls').textContent = urls.join(', ');
+    })
+    .then(function(){
+      return t.sizeTo('#content');
+    });
   });
 
   
