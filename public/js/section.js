@@ -1,13 +1,13 @@
 /* global TrelloPowerUp */
 var t 
 
-t.render(function render() {
-  t.card('attachments')
-    .get('attachments')
-    .then(() => {
-      console.log("HUI")
-    })
-});
+// t.render(function render() {
+//   t.card('attachments')
+//     .get('attachments')
+//     .then(() => {
+//       console.log("HUI")
+//     })
+// });
 
 
 document.addEventListener("DOMContentLoaded", function() {
