@@ -8,7 +8,20 @@ var t = window.TrelloPowerUp.iframe();
 t.render(function(){
 
   console.log('t.render')
-  render_func()
+
+  t.card('attachments')
+  .get('attachments')
+  .filter(function(attachment){
+    return attachment.url.indexOf('https://trello.com/c/') == 0;
+  })
+  .then(function(yellowstoneAttachments){
+    var urls = yellowstoneAttachments.map(function(a){ return a.url; });
+    document.getElementById('urls').textContent = urls.join(', ');
+  })
+  .then(function(){
+    return t.sizeTo('#content');
+  });
+  //render_func()
 });
 
 
@@ -28,18 +41,7 @@ function render_func() {
   //     console.log(err)
   //   })  
   
-  t.card('attachments')
-  .get('attachments')
-  .filter(function(attachment){
-    return attachment.url.indexOf('https://trello.com/c/') == 0;
-  })
-  .then(function(yellowstoneAttachments){
-    var urls = yellowstoneAttachments.map(function(a){ return a.url; });
-    document.getElementById('urls').textContent = urls.join(', ');
-  })
-  .then(function(){
-    return t.sizeTo('#content');
-  });
+  
 
 
   // console.log('attachment render')
@@ -71,5 +73,5 @@ function render_func() {
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   console.log('ready render')
-  render_func()
+  //render_func()
 });
