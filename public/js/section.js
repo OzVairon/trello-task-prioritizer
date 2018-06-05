@@ -12,6 +12,7 @@ t.render(function(){
 
 function render_func() {
   console.log('attachment render')
+  console.log(t)
   // make sure your rendering logic lives here, since we will
   // recall this method as the user adds and removes attachments
   // from your section
