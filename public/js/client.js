@@ -117,13 +117,15 @@ var getBadges = function(t, isDetailed){
     result.push(
       {
         title: 'Related cards', 
-            text: 'related',
-            icon: GRAY_ICON, 
-            callback: function(context) { // function to run on click
-              return context.popup({
-                title: 'Add related card',
-              });
-            }
+        text: 'related',
+        icon: GRAY_ICON, 
+        callback: function(context) { // function to run on click
+          return context.popup({
+            title: 'Add related card',
+            url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+            height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+          });
+        }
       }
     )
     return result;
