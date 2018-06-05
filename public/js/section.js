@@ -11,20 +11,34 @@ t.render(function(){
 
 
 function render_func() {
-  console.log('attachment render')
-  console.log(t)
-  // make sure your rendering logic lives here, since we will
-  // recall this method as the user adds and removes attachments
-  // from your section
-  console.log(t.card('all'));
 
-  Promise.resolve(t.card('all'))
-    .then(function (card) {
-      console.log(card);
-    })
-    .catch((err) => {
-      console.log(err.statusText)
-    })
+
+  t.card('attachments')
+  .get('attachments')
+  .filter(function(attachment){
+    return attachment.url.indexOf('https://trello.com/c/') == 0;
+  })
+  .then(function(yellowstoneAttachments){
+    var urls = yellowstoneAttachments.map(function(a){ return a.url; });
+    document.getElementById('urls').textContent = urls.join(', ');
+  })
+  .then(function(){
+    return t.sizeTo('#content');
+  });
+
+
+  // console.log('attachment render')
+  // console.log(t)
+  
+  // console.log(t.card('all'));
+
+  // Promise.resolve(t.card('all'))
+  //   .then(function () {
+  //     console.log('hui');
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.statusText)
+  //   })
   // .get('attachments')
   // .filter(function(attachment){
   //   console.log(attachment)
@@ -41,6 +55,6 @@ function render_func() {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-  render_func()
   console.log('attachment ready')
+  render_func()
 });
