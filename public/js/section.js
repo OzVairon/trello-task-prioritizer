@@ -1,5 +1,5 @@
 /* global TrelloPowerUp */
-
+var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
 // you can access arguments passed to your iframe like so
@@ -18,12 +18,12 @@ function render_func() {
   // from your section
   console.log(t.card('all'));
 
-  t.card('all')
+  Promise.resolve(t.card('all'))
     .then(function (card) {
       console.log(card);
     })
-    .catch((error) => {
-      console.log(error)
+    .catch((err) => {
+      console.log(err.statusText)
     })
   // .get('attachments')
   // .filter(function(attachment){
