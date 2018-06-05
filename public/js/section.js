@@ -16,9 +16,9 @@ function render_func() {
 
   console.log('render')
 
-  consoleo.log(t)
+  console.log(t)
 
-  consoleo.log('promice object')
+  console.log('promice object')
   console.log(t.card('all'))
 
   t.card('attachments')
