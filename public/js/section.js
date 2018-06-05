@@ -5,23 +5,32 @@ let t = TrelloPowerUp.iframe();
 // you can access arguments passed to your iframe like so
 //var arg = t.arg('arg');
 
-t.render(function(){
+// t.render(function(){
 
-  console.log('t.render')
+//   console.log('t.render')
 
+//   t.card('attachments')
+//   .get('attachments')
+//   .filter(function(attachment){
+//     return attachment.url.indexOf('https://trello.com/c/') == 0;
+//   })
+//   .then(function(yellowstoneAttachments){
+//     var urls = yellowstoneAttachments.map(function(a){ return a.url; });
+//     document.getElementById('urls').textContent = urls.join(', ');
+//   })
+//   .then(function(){
+//     return t.sizeTo('#content');
+//   });
+//   //render_func()
+// });
+
+
+t.render(function render() {
   t.card('attachments')
-  .get('attachments')
-  .filter(function(attachment){
-    return attachment.url.indexOf('https://trello.com/c/') == 0;
-  })
-  .then(function(yellowstoneAttachments){
-    var urls = yellowstoneAttachments.map(function(a){ return a.url; });
-    document.getElementById('urls').textContent = urls.join(', ');
-  })
-  .then(function(){
-    return t.sizeTo('#content');
-  });
-  //render_func()
+    .get('attachments')
+    .then(() => {
+      console.log("HUI")
+    })
 });
 
 
@@ -73,5 +82,8 @@ function render_func() {
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   console.log('ready render')
+  console.log(t)
+  console.log()
+  t.render
   //render_func()
 });
