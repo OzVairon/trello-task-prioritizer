@@ -154,8 +154,6 @@ var getBadges = function(t, isDetailed){
         .spread((cards, att) => {
           let related = find_related_cards(att.attachments)
           let unrelated = cards.filter(c => {return related.filter(rc => {return rc.name == c.id}).length == 0})
-
-
           let items = unrelated.map(
             function(card){
               let temp = related.filter((rc) => {return rc.name == card.id})
@@ -185,12 +183,11 @@ var getBadges = function(t, isDetailed){
             return context.popup({
               title: 'Cards relations',
               items: items,
-                search: {
-                  count: 20, 
-                  placeholder: 'Search card',
-                  empty: 'No cards found',
-                  height: 184
-                }
+              search: {
+                count: 10, 
+                placeholder: 'Search card',
+                empty: 'No cards found'
+              }
             });
           }
         }
@@ -286,10 +283,6 @@ var boardButtonCallback = function(t){
 
 
 TrelloPowerUp.initialize({
-  // NOTE about asynchronous responses
-  // If you need to make an asynchronous request or action before you can reply to Trello
-  // you can return a Promise (bluebird promises are included at TrelloPowerUp.Promise)
-  // The Promise should resolve to the object type that is expected to be returned
   'attachment-sections': function(t, options){
     return related_cards(t, options)
   },
@@ -339,7 +332,6 @@ TrelloPowerUp.initialize({
   'card-badges': function(t, options){
     return getBadges(t, false);
   },
-  
   'card-detail-badges': function(t, options) {
     return getBadges(t, true);
   },
