@@ -90,10 +90,13 @@ var randomBadgeColor = function() {
 };
 
 function create_hours_badge(t, isDetailed) {
-  return t.get('card', 'shared', 'effort_hours').then((hours) => {
+  return t.get('card', 'shared', 'effort_hours')
+  .then((hours) => {
+    let badge
+    console.log(hours)
     if (isDetailed || hours) {
       if (hours == undefined) hours = 'not defined';
-      let badge = {
+      badge = {
           title: 'Hours effort', 
           text: hours + ' h',
           icon: GRAY_ICON, 
@@ -135,10 +138,16 @@ var getBadges = function(t, isDetailed){
   
   return create_hours_badge(t, isDetailed)
   .then((b) => {if (b) result.push(b)})
-  .create_related_cards_badge(t, isDetailed)
-  .then((b) => {if (b) result.push(b)})
+  .then(() => {
+    return create_related_cards_badge(t, isDetailed)
+    .then((b) => {if (b) result.push(b)})
+  })
+  
   .then(()=>{return result})
-  .catch((err) => console.log(err))
+  .catch((err) => {
+    console.log(err)
+    return result
+  })
   // .create_related_cards_badge(t, isDetailed)
   // .then(badge => {
   //   if (badge) {
