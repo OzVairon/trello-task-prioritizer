@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
     t.card('attachments')
     .get('attachments')
     .filter(function(attachment){
-      return attachment.url.indexOf('https://trello.com/c/') == 0 //&& attachment.url.substring(base.length).length == 24);
+      return attachment.url.indexOf('https://trello.com/c/') == 0 && attachment.url.substring(base.length).length == 24;
     })
     .then(function(related){
       console.log(related)
       //create_card_view(related.name, related.url)
       related.forEach( c=> {
-        create_card_view(c.name, c.url)
+        create_card_view(c.name, c.id)
       })
 
       if (related.size === 0) {
@@ -47,16 +47,14 @@ document.addEventListener("DOMContentLoaded", function() {
   // console.log('ready end')
 });
 
-function create_card_view(name, url) {
-  console.log(name, url)
+function create_card_view(name, id) {
+  console.log(name, id)
   let card_html = (
     `<li class = ''>
-      <a href = '${url}'>
         <div class ='card-back'>
           <div><span class='card-title'>${name}</span></div>
           <div><div class='delete-att-button'>x</div></div>
         </div>
-      </a>
     </li>`
   )
 
@@ -64,5 +62,9 @@ function create_card_view(name, url) {
   newNode.className = 'card-wrapper';
   newNode.innerHTML = card_html
   document.getElementById('related-card-list').appendChild(newNode);  
+
+  newNode.addEventListener('click', function(){
+    t.showCard(id)
+  })
   
 } 
