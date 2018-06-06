@@ -12,8 +12,10 @@ var arg = t.arg('arg');
 
 document.addEventListener("DOMContentLoaded", function() {
 //  t = TrelloPowerUp.iframe();
-  console.log('arguments')
-  console.log(arg)
+  //console.log('arguments')
+  //console.log(arg)
+
+  console.log(t.getContext())
   t.render(function render() {
     t.card('attachments')
     .get('attachments')
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(function(related){
 
-      create_card_view(related.name, related.url)
+      //create_card_view(related.name, related.url)
       related.forEach( c=> {
         create_card_view(c.name, c.url)
       })

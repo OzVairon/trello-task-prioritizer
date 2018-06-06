@@ -186,7 +186,7 @@ let related_cards_badge = function(t, isDetailed) {
 }
 
 var related_cards = function(t, opt) {
-  console.log(opt)
+  //console.log(opt)
 
   var claimed = opt.entries.filter(function(attachment){
     let base = 'https://trello.com/c/';
