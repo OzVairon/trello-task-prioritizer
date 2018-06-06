@@ -23,6 +23,13 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(function(related){
 
       create_card_view(related.name, related.url)
+      related.forEach( c=> {
+        create_card_view(c.name, c.url)
+      })
+
+      if (related.size === 0) {
+        document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
+      }
       //var urls = related.map(function(a){ return a.url; });
       //document.getElementById('urls').textContent = urls.join(', ');
     })
@@ -32,10 +39,10 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   
-  console.log('ready')
-  console.log(t)
-  console.log(t.getContext())
-  console.log('ready end')
+  // console.log('ready')
+  // console.log(t)
+  // console.log(t.getContext())
+  // console.log('ready end')
 });
 
 function create_card_view(name, url) {
