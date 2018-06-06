@@ -134,25 +134,27 @@ var getBadges = function(t, isDetailed){
   
   create_hours_badge(t, isDetailed)
   .then((b) => {if (b) result.push(b)})
-  .create_related_cards_badge(t, isDetailed)
-  .then(badge => {
-    if (badge) {
-      badge.callback = function(context) { // function to run on click
-        return context.popup({
-          title: 'Cards relations',
-          items: items,
-            search: {
-              count: 20, // How many items to display at a time
-              placeholder: 'Search card',
-              empty: 'No cards found',
-              height: 184
-            }
-        });
-      }
-      result.push(badge)
-    }
-  }).then(()=>{return result})
+  .then(()=>{return result})
   .catch((err).console.log(err))
+  // .create_related_cards_badge(t, isDetailed)
+  // .then(badge => {
+  //   if (badge) {
+  //     badge.callback = function(context) { // function to run on click
+  //       return context.popup({
+  //         title: 'Cards relations',
+  //         items: items,
+  //           search: {
+  //             count: 20, // How many items to display at a time
+  //             placeholder: 'Search card',
+  //             empty: 'No cards found',
+  //             height: 184
+  //           }
+  //       });
+  //     }
+  //     result.push(badge)
+  //   }
+  // })
+  
 
 
 
