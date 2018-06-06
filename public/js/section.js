@@ -38,13 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
           document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
         }
       })
-      
-      //var urls = related.map(function(a){ return a.url; });
-      //document.getElementById('urls').textContent = urls.join(', ');
+      .then(function(){
+        return t.sizeTo('#content');
+      })
     })
-    .then(function(){
-      return t.sizeTo('#content');
-    })
+    
     .catch(() => console.log(t.getContext()))
   });
 
