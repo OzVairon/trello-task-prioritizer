@@ -38,6 +38,8 @@ t.render(function render() {
 
 
 function create_card_view(name, card_id, att_id) {
+
+  console.log('1')
   let card_html = (
     `<div class ='card-back'>
       <div><span class='card-title'>${name}</span></div>
@@ -48,18 +50,20 @@ function create_card_view(name, card_id, att_id) {
   var newNode = document.createElement('li');
   newNode.className = 'card-wrapper';
   newNode.innerHTML = card_html
+
+  console.log('2')
   document.getElementById('related-card-list').appendChild(newNode);  
   newNode.addEventListener('click', function(){
     t.showCard(card_id)
   })
-
-  newNode.getElementsByClassName('delete-att-button')[0].addEventListener('click', function(){
-    t.card('id').then(s_card_id => {
-      console.log(s_card_id)
-      console.log(att_id)
-      delete_attachment(s_card_id.id, att_id)
-    })
-  })
+  console.log('3')
+  // newNode.getElementsByClassName('delete-att-button')[0].addEventListener('click', function(){
+  //   t.card('id').then(s_card_id => {
+  //     console.log(s_card_id)
+  //     console.log(att_id)
+  //     delete_attachment(s_card_id.id, att_id)
+  //   })
+  // })
 } 
 
 function delete_attachment(card_id, att_id) {
