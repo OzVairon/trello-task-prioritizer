@@ -170,17 +170,19 @@ var getBadges = function(t, isDetailed){
         })
 
       ]).spread((badge, items) => {
-        badge.callback = function(context) { 
-          return context.popup({
-            title: 'Cards relations',
-            items: items,
-              search: {
-                count: 20, 
-                placeholder: 'Search card',
-                empty: 'No cards found',
-                height: 184
-              }
-          });
+        if (isDetailed && badge) {
+          badge.callback = function(context) { 
+            return context.popup({
+              title: 'Cards relations',
+              items: items,
+                search: {
+                  count: 20, 
+                  placeholder: 'Search card',
+                  empty: 'No cards found',
+                  height: 184
+                }
+            });
+          }
         }
       })
   ])
