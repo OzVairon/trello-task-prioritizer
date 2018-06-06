@@ -1,65 +1,44 @@
 /* global TrelloPowerUp */
 var t = TrelloPowerUp.iframe();
 var arg = t.arg('arg');
-// t.render(function render() {
-//   t.card('attachments')
-//     .get('attachments')
-//     .then(() => {
-//       console.log("HUI")
-//     })
-// });
 
 
-document.addEventListener("DOMContentLoaded", function() {
-//  t = TrelloPowerUp.iframe();
-  //console.log('arguments')
-  //console.log(arg)
-
-  console.log(t.getContext())
-  t.render(function render() {
-    t.card('attachments')
-    .get('attachments')
-    .filter(function(attachment){
-      let base = 'https://trello.com/c/';
-      return (attachment.url.indexOf(base) == 0 && attachment.url.substring(base.length).length == 24);
-    })
-    .then(function(related){
-      t.cards('all').then( (cards) => {
-        document.getElementById('related-card-list').innerHTML = ""
-        related.forEach( rc => {
-          
-          let theCard = cards.filter((e) => {return e.id == rc.name})[0]
-          if (theCard) {
-            console.log('I found it')
-            create_card_view(theCard.name, theCard.id)
-          }
-          else {
-            console.log('I dont found it')
-            create_card_view(rc.name, rc.name)
-          }
-        })
-
-        if (related.size === 0) {
-          document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
+t.render(function render() {
+  t.card('attachments')
+  .get('attachments')
+  .filter(function(attachment){
+    let base = 'https://trello.com/c/';
+    return (attachment.url.indexOf(base) == 0 && attachment.url.substring(base.length).length == 24);
+  })
+  .then(function(related){
+    t.cards('all').then( (cards) => {
+      document.getElementById('related-card-list').innerHTML = ""
+      related.forEach( rc => {
+        
+        let theCard = cards.filter((e) => {return e.id == rc.name})[0]
+        if (theCard) {
+          console.log('I found it')
+          create_card_view(theCard.name, theCard.id)
+        }
+        else {
+          console.log('I dont found it')
+          create_card_view(rc.name, rc.name)
         }
       })
-      .then(function(){
-        return t.sizeTo('#content');
-      })
-    })
-    
-    .catch(() => console.log(t.getContext()))
-  });
 
-  
-  // console.log('ready')
-  // console.log(t)
-  // console.log(t.getContext())
-  // console.log('ready end')
+      if (related.size === 0) {
+        document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
+      }
+    })
+    .then(function(){
+      return t.sizeTo('#content');
+    })
+  })
+  .catch(() => console.log(t.getContext()))
 });
 
+
 function create_card_view(name, id) {
-  console.log(name, id)
   let card_html = (
     `<div class ='card-back'>
       <div><span class='card-title'>${name}</span></div>
@@ -71,9 +50,7 @@ function create_card_view(name, id) {
   newNode.className = 'card-wrapper';
   newNode.innerHTML = card_html
   document.getElementById('related-card-list').appendChild(newNode);  
-
   newNode.addEventListener('click', function(){
     t.showCard(id)
   })
-  
 } 

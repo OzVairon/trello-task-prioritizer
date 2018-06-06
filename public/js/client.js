@@ -142,55 +142,40 @@ var getBadges = function(t, isDetailed){
         icon: GRAY_ICON, 
         callback: function(context) { // function to run on click
           return context.popup({
-            title: 'Hours effort settings',
+            title: 'Cards relations',
             items: items,
               search: {
                 count: 20, // How many items to display at a time
-                placeholder: 'Search National Parks',
-                empty: 'No parks found'
-                
+                placeholder: 'Search card',
+                empty: 'No cards found',
+                height: 184
               }
           });
         }
-        
-        // callback: function(context) { // function to run on click
-        //   return context.popup({
-        //     title: 'Add related card',
-        //     url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-        //     height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-        //   });
-        // }
+     
       }
     )
-
-    
-    // return t.popup({
-    //   title: 'Popup Search Example',
-    //   items: items, // Trello will search client-side based on the text property of the items
-    //   search: {
-    //     count: 5, // How many items to display at a time
-    //     placeholder: 'Search National Parks',
-    //     empty: 'No parks found'
-    //   }
-    // });
-
 
     return result;
   })
 };
 
-
-let related_cards_badge = function(t, isDetailed) {
-
-}
-
-var related_cards = function(t, opt) {
-  //console.log(opt)
-
-  var claimed = opt.entries.filter(function(attachment){
+function find_related_cards(attachments) {
+  var related = attachments.filter(function(attachment){
     let base = 'https://trello.com/c/';
     return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
   });
+  return related
+}
+
+
+let related_cards_badge = function(t, isDetailed) {
+  
+}
+
+var related_cards = function(t, opt) {
+
+  var claimed = find_related_cards(opt.entries)
 
   if(claimed && claimed.length > 0){
     return [{
@@ -253,64 +238,6 @@ var boardButtonCallback = function(t){
   })        
 };
 
-var cardButtonCallback = function(t){
-  // Trello Power-Up Popups are actually pretty powerful
-  // Searching is a pretty common use case, so why reinvent the wheel
-  var items = ['acad', 'arch', 'badl', 'crla', 'grca', 'yell', 'yose'].map(
-    function(parkCode){
-      var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
-      var nameForCode = '🏞 ' + parkCode.toUpperCase();
-      return {
-        text: nameForCode,
-        url: urlForCode,
-        callback: function(t){
-          // In this case we want to attach that park to the card as an attachment
-          // but first let's ensure that the user can write on this model
-          if (t.memberCanWriteToModel('card')){
-            return t.attach({ url: urlForCode, name: nameForCode })
-            .then(function(){
-              // once that has completed we should tidy up and close the popup
-              return t.closePopup();
-            });
-          } else {
-            console.log("Oh no! You don't have permission to add attachments to this card.")
-            return t.closePopup(); // We're just going to close the popup for now.
-          };
-        }
-      };
-    });
-
-  // we could provide a standard iframe popup, but in this case we
-  // will let Trello do the heavy lifting
-  return t.popup({
-    title: 'Popup Search Example',
-    items: items, // Trello will search client-side based on the text property of the items
-    search: {
-      count: 5, // How many items to display at a time
-      placeholder: 'Search National Parks',
-      empty: 'No parks found'
-    }
-  });
-  
-  // in the above case we let Trello do the searching client side
-  // but what if we don't have all the information up front?
-  // no worries, instead of giving Trello an array of `items` you can give it a function instead
-  /*
-  return t.popup({
-    title: 'Popup Async Search',
-    items: function(t, options) {
-      // use options.search which is the search text entered so far
-      // and return a Promise that resolves to an array of items
-      // similar to the items you provided in the client side version above
-    },
-    search: {
-      placeholder: 'Start typing your search',
-      empty: 'Huh, nothing there',
-      searching: 'Scouring the internet...'
-    }
-  });
-  */
-};
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
