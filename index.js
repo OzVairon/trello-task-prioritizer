@@ -19,12 +19,8 @@ app.get('/', (req, res) => res.render('pages/index'))
 app.get('/numeric', (req, res) => {
   	console.log('try to render numeric form')
 
-  	let data = {
-  		key: req.query.key,
-  		description: req.query.description
-  	};
 
-  	res.render('pages/numeric_form', {data: data})
+  	res.render('pages/numeric_form')
 	})
 	
 	app.get('/section', (req, res) => {

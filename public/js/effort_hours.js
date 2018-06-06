@@ -33,7 +33,7 @@ t.render(function(){
     .done();
   })
 });
-s
+
 document.getElementById('save').addEventListener('click', function(){
   console.log(t.getContext())
   let field = document.getElementById('numeric_field');

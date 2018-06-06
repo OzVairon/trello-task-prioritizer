@@ -102,7 +102,7 @@ function create_hours_badge(t, isDetailed) {
           callback: function(context) { 
             return context.popup({
               title: 'Hours effort settings',
-              url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+              url: BASE_URL + 'effort_hours' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
               height: 184 
             });
           }
