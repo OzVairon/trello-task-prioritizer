@@ -115,11 +115,11 @@ var getBadges = function(t, isDetailed){
 
     let items = cards.map(
       function(card){
-        var urlForCode = 'https://trello.com/c/' + card.id;
-        var nameForCode = card.name;
+        var url = 'https://trello.com/c/' + card.id;
+        var cardID = card.id;
         return {
-          text: nameForCode,
-          url: urlForCode,
+          text: cardID,
+          url: url,
           callback: function(t){
             console.log(nameForCode)
             if (t.memberCanWriteToModel('card')){
@@ -146,7 +146,7 @@ var getBadges = function(t, isDetailed){
             title: 'Hours effort settings',
             items: items,
               search: {
-                count: 5, // How many items to display at a time
+                count: 20, // How many items to display at a time
                 placeholder: 'Search National Parks',
                 empty: 'No parks found'
                 

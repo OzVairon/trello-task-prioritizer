@@ -1,5 +1,5 @@
 body {
-  background: rgba(0,0,0,.5);\
+  background: rgba(0,0,0,.5);
   /*
   display: flex;
   align-items: center;
@@ -13,4 +13,13 @@ body {
   max-width: 600px;
   max-height: 90%;
   */
+}
+
+.card-back {
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.card-wrapper {
+  padding: 4px;
 }
