@@ -20,7 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
     t.card('attachments')
     .get('attachments')
     .filter(function(attachment){
-      return attachment.url.indexOf('https://trello.com/c/') == 0 && attachment.url.substring(base.length).length == 24;
+      let base = 'https://trello.com/c/';
+      return (attachment.url.indexOf(base) == 0 && attachment.url.substring(base.length).length == 24);
     })
     .then(function(related){
       console.log(related)
