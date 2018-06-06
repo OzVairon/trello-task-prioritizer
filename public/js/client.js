@@ -89,75 +89,141 @@ var randomBadgeColor = function() {
   return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
 };
 
-var getBadges = function(t, isDetailed){
-  return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due'), t.cards('all')])
-  .spread(function(cardName, hours, due, cards){
-    //console.log(moment.utc(due.due))
-    let result = [];
+function create_hours_badge(t, isDetailed) {
+  return t.get('card', 'shared', 'effort_hours').then((hours) => {
     if (isDetailed || hours) {
       if (hours == undefined) hours = 'not defined';
-      result.push(
-        {
+      let badge = {
           title: 'Hours effort', 
           text: hours + ' h',
           icon: GRAY_ICON, 
-          callback: function(context) { // function to run on click
+          callback: function(context) { 
             return context.popup({
               title: 'Hours effort settings',
-              //url: BASE_URL + 'views/effort_hours.html',
               url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-              height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+              height: 184 
             });
           }
         }
-        )
+      return badge;
     }
-
-    let items = cards.map(
-      function(card){
-        var urlForCard = 'https://trello.com/c/' + card.id;
-        
-        return {
-          text: card.name,
-          url: urlForCard,
-          callback: function(t){
-            if (t.memberCanWriteToModel('card')){
-              return t.attach({ url: urlForCard, name: card.id })
-              .then(function(){
-                return t.closePopup();
-              });
-            } else {
-              console.log("Oh no! You don't have permission to add attachments to this card.")
-              return t.closePopup(); // We're just going to close the popup for now.
-            };
-          }
-        };
-      });
-
-
-    result.push(
-      {
-        title: 'Related cards', 
-        text: 'related',
-        icon: GRAY_ICON, 
-        callback: function(context) { // function to run on click
-          return context.popup({
-            title: 'Cards relations',
-            items: items,
-              search: {
-                count: 20, // How many items to display at a time
-                placeholder: 'Search card',
-                empty: 'No cards found',
-                height: 184
-              }
-          });
-        }
-     
-      }
-    )
-
-    return result;
   })
+}
+
+
+
+
+var getBadges = function(t, isDetailed){
+
+  let result = [];
+  
+  create_hours_badge(t, isDetailed)
+  .then((b) => {if (b) result.push(b)})
+  .create_related_cards_badge(t, isDetailed)
+  .then(badge => {
+    if (badge) {
+      badge.callback = function(context) { // function to run on click
+        return context.popup({
+          title: 'Cards relations',
+          items: items,
+            search: {
+              count: 20, // How many items to display at a time
+              placeholder: 'Search card',
+              empty: 'No cards found',
+              height: 184
+            }
+        });
+      }
+      result.push(badge)
+    }
+  }).then(()=>{return result})
+
+
+
+  // return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due'), t.cards('all')])
+  // .spread(function(cardName, hours, due, cards){
+  //   //console.log(moment.utc(due.due))
+    
+  //   if (isDetailed || hours) {
+  //     if (hours == undefined) hours = 'not defined';
+  //     result.push(
+  //       {
+  //         title: 'Hours effort', 
+  //         text: hours + ' h',
+  //         icon: GRAY_ICON, 
+  //         callback: function(context) { // function to run on click
+  //           return context.popup({
+  //             title: 'Hours effort settings',
+  //             url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+  //             height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+  //           });
+  //         }
+  //       }
+  //       )
+  //   }
+
+  //   let items = cards.map(
+  //     function(card){
+  //       var urlForCard = 'https://trello.com/c/' + card.id;
+        
+  //       return {
+  //         text: card.name,
+  //         url: urlForCard,
+  //         callback: function(t){
+  //           if (t.memberCanWriteToModel('card')){
+  //             return t.attach({ url: urlForCard, name: card.id })
+  //             .then(function(){
+  //               return t.closePopup();
+  //             });
+  //           } else {
+  //             console.log("Oh no! You don't have permission to add attachments to this card.")
+  //             return t.closePopup(); // We're just going to close the popup for now.
+  //           };
+  //         }
+  //       };
+  //     });
+
+
+  //   // result.push(
+  //   //   {
+  //   //     title: 'Related cards', 
+  //   //     text: 'related',
+  //   //     icon: GRAY_ICON, 
+  //   //     callback: function(context) { // function to run on click
+  //   //       return context.popup({
+  //   //         title: 'Cards relations',
+  //   //         items: items,
+  //   //           search: {
+  //   //             count: 20, // How many items to display at a time
+  //   //             placeholder: 'Search card',
+  //   //             empty: 'No cards found',
+  //   //             height: 184
+  //   //           }
+  //   //       });
+  //   //     }
+     
+  //   //   }
+  //   // )
+
+  //   create_related_cards_badge(t, isDetailed).then(badge => {
+  //     if (badge) {
+  //       badge.callback = function(context) { // function to run on click
+  //         return context.popup({
+  //           title: 'Cards relations',
+  //           items: items,
+  //             search: {
+  //               count: 20, // How many items to display at a time
+  //               placeholder: 'Search card',
+  //               empty: 'No cards found',
+  //               height: 184
+  //             }
+  //         });
+  //       }
+  //     }
+  //   })
+
+  //   return result;
+  // })
 };
 
 function find_related_cards(attachments) {
@@ -169,7 +235,23 @@ function find_related_cards(attachments) {
 }
 
 
-let related_cards_badge = function(t, isDetailed) {
+function create_related_cards_badge(t, isDetailed) {
+  return t.card('attachment').then((att) => {
+    let related = find_related_cards;
+    let badge
+    if (isDetailed || related.size > 0) {
+      badge = {
+        title: 'Related cards', 
+        text: related.size + 'related',
+        icon: GRAY_ICON, 
+      }
+    }
+    return badge
+  })
+
+
+
+  
   
 }
 
@@ -254,7 +336,6 @@ TrelloPowerUp.initialize({
       return [{
         text: "Card Name",
         callback: function (t, opts) {
-          console.log(opts.cards)
           var sortedCards = opts.cards.sort(
             function(a,b) {
               if (a.name > b.name) {
