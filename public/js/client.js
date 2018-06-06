@@ -115,6 +115,7 @@ function create_hours_badge(t, isDetailed) {
 function create_related_cards_badge(t, isDetailed) {
   return t.card('attachments')
   .then((att) => {
+    console.log(att)
     let related = find_related_cards(att);
     let badge
     if (isDetailed || related.size > 0) {
@@ -136,7 +137,6 @@ function create_related_cards_badge(t, isDetailed) {
 var getBadges = function(t, isDetailed){
 
   let result = [];
-  
   return Promise.all(
     [
       create_hours_badge(t, isDetailed)
@@ -150,7 +150,6 @@ var getBadges = function(t, isDetailed){
           let items = cards.map(
             function(card){
               var urlForCard = 'https://trello.com/c/' + card.id;
-              
               return {
                 text: card.name,
                 url: urlForCard,
@@ -161,8 +160,8 @@ var getBadges = function(t, isDetailed){
                       return t.closePopup();
                     });
                   } else {
-                    console.log("Oh no! You don't have permission to add attachments to this card.")
-                    return t.closePopup(); // We're just going to close the popup for now.
+                    console.log("You don't have permission to add attachments to this card.")
+                    return t.closePopup();
                   };
                 }
               };
@@ -314,11 +313,13 @@ var getBadges = function(t, isDetailed){
 };
 
 function find_related_cards(attachments) {
-  var related = attachments.filter(function(attachment){
-    let base = 'https://trello.com/c/';
-    return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
-  });
-  return related
+  if (attachments) {
+    var related = attachments.filter(function(attachment){
+      let base = 'https://trello.com/c/';
+      return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
+    });
+    return related
+  } else return []
 }
 
 
