@@ -40,7 +40,7 @@ function create_card_view(name, id) {
   let card_html = (
     `<div class ='card-back'>
       <div><span class='card-title'>${name}</span></div>
-        <button class='delete-att-button mod-danger'>x</button> 
+        <button class='delete-att-button'>x</button> 
     </div>`
   )
 
