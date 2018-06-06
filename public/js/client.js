@@ -117,10 +117,6 @@ function create_related_cards_badge(t, isDetailed) {
   .then((attachments) => {
     
     let related = find_related_cards(attachments.attachments);
-    t.card('name').then((n) => {
-      console.log(n)
-      console.log(related)
-    })
     let badge
 
     if (isDetailed || related.length > 0) {

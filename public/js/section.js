@@ -14,7 +14,7 @@ t.render(function render() {
     t.cards('all').then( (cards) => {
       document.getElementById('related-card-list').innerHTML = ""
       related.forEach( rc => {
-        
+        console.log(rc)
         let theCard = cards.filter((e) => {return e.id == rc.name})[0]
         if (theCard) {
           create_card_view(theCard.name, theCard.id, rc.id)
