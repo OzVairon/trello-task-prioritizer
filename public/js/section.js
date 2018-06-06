@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", function() {
     t.card('attachments')
     .get('attachments')
     .filter(function(attachment){
-      return (attachment.url.indexOf('https://trello.com/c/') == 0 && attachment.url.substring(base.length).length === 24);
+      return (attachment.url.indexOf('https://trello.com/c/') == 0 && attachment.url.substring(base.length).length == 24);
     })
     .then(function(related){
-
+      console.log(related)
       //create_card_view(related.name, related.url)
       related.forEach( c=> {
         create_card_view(c.name, c.url)
