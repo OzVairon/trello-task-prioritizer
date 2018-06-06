@@ -25,11 +25,12 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(function(related){
       t.cards('all').then( (cards) => {
-        console.log(related)
-        console.log(cards)
         document.getElementById('related-card-list').innerHTML = ""
         related.forEach( c => {
+          
           let theCard = cards.filter((e) => {return e.id == c.id})[0]
+          console.log(c)
+          console.log(theCard)
           if (theCard) {
             console.log('I found it')
             create_card_view(theCard.name, c.id)
