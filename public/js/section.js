@@ -30,8 +30,14 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('related-card-list').innerHTML = ""
         related.forEach( c => {
           let theCard = cards.filter((e) => {return e.id == c.id})[0]
-          if (theCard) create_card_view(theCard.name, c.id)
-          else create_card_view(c.name, c.id)
+          if (theCard) {
+            console.log('I found it')
+            create_card_view(theCard.name, c.id)
+          }
+          else {
+            console.log('I dont found it')
+            create_card_view(c.name, c.id)
+          }
         })
 
         if (related.size === 0) {
