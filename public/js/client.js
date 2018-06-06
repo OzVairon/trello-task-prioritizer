@@ -114,9 +114,9 @@ function create_hours_badge(t, isDetailed) {
 
 function create_related_cards_badge(t, isDetailed) {
   return t.card('attachments')
-  .then((att) => {
-    console.log(att)
-    let related = find_related_cards(att);
+  .then((attachments) => {
+    console.log(attachments)
+    let related = find_related_cards(attachments);
     let badge
     if (isDetailed || related.size > 0) {
       badge = {
@@ -314,7 +314,7 @@ var getBadges = function(t, isDetailed){
 
 function find_related_cards(attachments) {
   if (attachments) {
-    var related = attachments.filter(function(attachment){
+    let related = attachments.filter((attachment) => {
       let base = 'https://trello.com/c/';
       return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
     });
@@ -325,7 +325,7 @@ function find_related_cards(attachments) {
 
 
 
-var related_cards = function(t, opt) {
+let related_cards = function(t, opt) {
 
   var claimed = find_related_cards(opt.entries)
 
@@ -391,7 +391,6 @@ var boardButtonCallback = function(t){
 };
 
 
-// We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
   // NOTE about asynchronous responses
   // If you need to make an asynchronous request or action before you can reply to Trello
