@@ -17,10 +17,11 @@ t.render(function render() {
         console.log(rc)
         let theCard = cards.filter((e) => {return e.id == rc.name})[0]
         if (theCard) {
+          consolr.log(rc)
           create_card_view(theCard.name, theCard.id, rc.id)
         }
         else {
-          create_card_view(rc.name, rc.name)
+          create_card_view(rc.name, rc.name, rc.id)
         }
       })
 
@@ -56,7 +57,7 @@ function create_card_view(name, id, att_id) {
     t.card('id').then(card_id => {
       console.log(card_id)
       console.log(att_id)
-      delete_attachment(card_id, att_id)
+      delete_attachment(card_id.id, att_id)
     })
   })
 } 
