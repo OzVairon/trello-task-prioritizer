@@ -35,8 +35,9 @@ ul {
   position: absolute;
   right: 4px;
   top: 4px;
-  width: 14px;
-  height: 14px;
+  /*width: 14px;*/
+  /*height: 14px;*/
+  padding: 4px;
 }
 
 .delete-att-button:hover {
