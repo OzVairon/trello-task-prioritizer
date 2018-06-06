@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function create_card_view(name, url) {
-
+  console.log(name, url)
   let card_html = (
     `<li class = ''>
       <a href = '${url}'>
