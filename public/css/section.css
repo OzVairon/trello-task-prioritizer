@@ -6,6 +6,14 @@
   cursor: pointer;
 }
 
+.card-back:hover {
+  background: #eee;
+}
+
+.card-back:hover .delete-att-button{
+  display: block
+}
+
 .card-title {
   font-size: 14px;
   margin-bottom: 4px;
@@ -18,4 +26,19 @@
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+.delete-att-button {
+  display: none;
+  background: #00000000;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+}
+
+.delete-att-button:hover {
+  display: block;
+  background: #00000033
 }
