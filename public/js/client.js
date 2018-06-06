@@ -115,8 +115,8 @@ function create_hours_badge(t, isDetailed) {
 function create_related_cards_badge(t, isDetailed) {
   return t.card('attachments')
   .then((attachments) => {
-    console.log(attachments)
-    let related = find_related_cards(attachments);
+    
+    let related = find_related_cards(attachments.attachments);
     let badge
     if (isDetailed || related.size > 0) {
       badge = {
