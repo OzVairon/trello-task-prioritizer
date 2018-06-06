@@ -113,13 +113,10 @@ var getBadges = function(t, isDetailed){
         )
     }
 
-    console.log(cards)
-
-
     let items = cards.map(
       function(card){
-        var urlForCode = card.url;
-        var nameForCode = '🏞 ' + card.name;
+        var urlForCode = 'https://trello.com/c/' + card.id;
+        var nameForCode = card.name;
         return {
           text: nameForCode,
           url: urlForCode,
@@ -322,7 +319,7 @@ TrelloPowerUp.initialize({
   // you can return a Promise (bluebird promises are included at TrelloPowerUp.Promise)
   // The Promise should resolve to the object type that is expected to be returned
   'attachment-sections': function(t, options){
-    related_cards(t, options)
+    return related_cards(t, options)
   },
   'list-sorters': function (t) {
     return t.list('name', 'id')
