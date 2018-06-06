@@ -19,10 +19,11 @@ t.render(function(){
   //   t.sizeTo('#content')
   //   .done();
   // })
-
+  console.log('render')
   
   t.get('card', 'shared', 'effort_hours')
   .then((hours)=>{
+    console.log(hours)
     if (data) field.value = data
     else field.value = 0;
   })
