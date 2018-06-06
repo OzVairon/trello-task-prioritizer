@@ -23,3 +23,7 @@ body {
 .card-wrapper {
   padding: 4px;
 }
+
+ul {
+  list-style-type: none;
+}
