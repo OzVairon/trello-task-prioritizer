@@ -138,11 +138,10 @@ var getBadges = function(t, isDetailed){
   
   return create_hours_badge(t, isDetailed)
   .then((b) => {if (b) result.push(b)})
-  .then(() => {
-    return create_related_cards_badge(t, isDetailed)
-    .then((b) => {if (b) result.push(b)})
-  })
-  
+  // .then(() => {
+  //   return create_related_cards_badge(t, isDetailed)
+  //   .then((b) => {if (b) result.push(b)})
+  // })
   .then(()=>{return result})
   .catch((err) => {
     console.log(err)
