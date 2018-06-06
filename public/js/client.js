@@ -189,7 +189,8 @@ var related_cards = function(t, opt) {
   console.log(opt)
 
   var claimed = opt.entries.filter(function(attachment){
-    return attachment.url.indexOf('https://trello.com/c/') === 0;
+    let base = 'https://trello.com/c/';
+    return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
   });
 
   if(claimed && claimed.length > 0){
