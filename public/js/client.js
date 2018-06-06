@@ -135,7 +135,7 @@ var getBadges = function(t, isDetailed){
   create_hours_badge(t, isDetailed)
   .then((b) => {if (b) result.push(b)})
   .then(()=>{return result})
-  .catch((err).console.log(err))
+  .catch((err) => console.log(err))
   // .create_related_cards_badge(t, isDetailed)
   // .then(badge => {
   //   if (badge) {
