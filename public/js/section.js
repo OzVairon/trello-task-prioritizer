@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(function(related){
       t.cards('all').then( (related, cards) => {
-        console.log(related)s
+        console.log(related)
         console.log(cards)
         document.getElementById('related-card-list').innerHTML = ""
         related.forEach( c => {
@@ -37,8 +37,6 @@ document.addEventListener("DOMContentLoaded", function() {
           document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
         }
       })
-      
-
       
       //var urls = related.map(function(a){ return a.url; });
       //document.getElementById('urls').textContent = urls.join(', ');
