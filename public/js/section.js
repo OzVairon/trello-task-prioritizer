@@ -53,13 +53,13 @@ function create_card_view(name, id, att_id) {
     t.showCard(id)
   })
 
-  newNode.getElementsByClassName('delete-att-button')[0].addEventListener('click', function(){
-    t.card('id').then(card_id => {
-      console.log(card_id)
-      console.log(att_id)
-      delete_attachment(card_id.id, att_id)
-    })
-  })
+  // newNode.getElementsByClassName('delete-att-button')[0].addEventListener('click', function(){
+  //   t.card('id').then(card_id => {
+  //     console.log(card_id)
+  //     console.log(att_id)
+  //     delete_attachment(card_id.id, att_id)
+  //   })
+  // })
 } 
 
 function delete_attachment(card_id, att_id) {
