@@ -14,13 +14,17 @@ t.render(function render() {
     t.cards('all').then( (cards) => {
       document.getElementById('related-card-list').innerHTML = ""
       related.forEach( rc => {
+        console.log('p1')
         console.log(rc)
         let theCard = cards.filter((e) => {return e.id == rc.name})[0]
         if (theCard) {
-          consolr.log(rc)
+          console.log('p2.1')
+          console.log(rc)
+
           create_card_view(theCard.name, theCard.id, rc.id)
         }
         else {
+          console.log('p2.2')
           create_card_view(rc.name, rc.name, rc.id)
         }
       })
