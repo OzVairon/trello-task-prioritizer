@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(function(related){
       t.cards('all').then( (related, cards) => {
+        console.log(related)s
+        console.log(cards)
         document.getElementById('related-card-list').innerHTML = ""
         related.forEach( c => {
           let name = cards.filter((e) => {return e.id == c.id})
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
           document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
         }
       })
+      
 
       
       //var urls = related.map(function(a){ return a.url; });
@@ -42,7 +45,8 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(function(){
       return t.sizeTo('#content');
-    });
+    })
+    .catch(() => console.log(t.getContext()))
   });
 
   
