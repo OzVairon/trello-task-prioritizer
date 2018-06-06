@@ -150,11 +150,16 @@ var getBadges = function(t, isDetailed){
       Promise.all([
         create_related_cards_badge(t, isDetailed)
         ,
-        t.cards('all')
-        .then((cards) => {
-          let items = cards.map(
+        Promise.all ([t.cards('all'), t.card('attachments')])
+        .spread((cards, att) => {
+          let related = find_related_cards(att.attachments)
+          let unrelated = cards.filter(c => {return related.filter(rc => {return rc.name == c.id}).length == 0})
+
+
+          let items = unrelated.map(
             function(card){
-              var urlForCard = 'https://trello.com/c/' + card.id;
+              let temp = related.filter((rc) => {return rc.name == card.id})
+              let urlForCard = 'https://trello.com/c/' + card.id;
               return {
                 text: card.name,
                 url: urlForCard,
@@ -198,126 +203,7 @@ var getBadges = function(t, isDetailed){
     return result
   })
 
-  // return create_hours_badge(t, isDetailed)
-  // .then((b) => {if (b) result.push(b)})
-  // .then(() => {
-  //   return create_related_cards_badge(t, isDetailed)
-  //   .then((b) => {
-  //     if (b) {
-  //       return b
-  //       b.callback = function(context) { 
-  //         return context.popup({
-  //           title: 'Cards relations',
-  //           items: items,
-  //             search: {
-  //               count: 20, 
-  //               placeholder: 'Search card',
-  //               empty: 'No cards found',
-  //               height: 184
-  //             }
-  //         });
-  //       }
-  //       // result.push(b)
-  //     }
-  //   }).then()
-  // })
-  // .then(()=>{return result})
-  // .catch((err) => {
-  //   console.log(err)
-  //   return result
-  // })
-
-
-  // let items = cards.map(
-  //   function(card){
-  //     var urlForCard = 'https://trello.com/c/' + card.id;
-      
-  //     return {
-  //       text: card.name,
-  //       url: urlForCard,
-  //       callback: function(t){
-  //         if (t.memberCanWriteToModel('card')){
-  //           return t.attach({ url: urlForCard, name: card.id })
-  //           .then(function(){
-  //             return t.closePopup();
-  //           });
-  //         } else {
-  //           console.log("Oh no! You don't have permission to add attachments to this card.")
-  //           return t.closePopup(); // We're just going to close the popup for now.
-  //         };
-  //       }
-  //     };
-  //   });
   
-  
-
-
-
-  // return Promise.all([t.card('name').get('name'), t.get('card', 'shared', 'effort_hours'), t.card('due'), t.cards('all')])
-  // .spread(function(cardName, hours, due, cards){
-  //   //console.log(moment.utc(due.due))
-    
-  //   if (isDetailed || hours) {
-  //     if (hours == undefined) hours = 'not defined';
-  //     result.push(
-  //       {
-  //         title: 'Hours effort', 
-  //         text: hours + ' h',
-  //         icon: GRAY_ICON, 
-  //         callback: function(context) { // function to run on click
-  //           return context.popup({
-  //             title: 'Hours effort settings',
-  //             url: BASE_URL + 'numeric' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
-  //             height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-  //           });
-  //         }
-  //       }
-  //       )
-  //   }
-
-    
-
-
-  //   // result.push(
-  //   //   {
-  //   //     title: 'Related cards', 
-  //   //     text: 'related',
-  //   //     icon: GRAY_ICON, 
-  //   //     callback: function(context) { // function to run on click
-  //   //       return context.popup({
-  //   //         title: 'Cards relations',
-  //   //         items: items,
-  //   //           search: {
-  //   //             count: 20, // How many items to display at a time
-  //   //             placeholder: 'Search card',
-  //   //             empty: 'No cards found',
-  //   //             height: 184
-  //   //           }
-  //   //       });
-  //   //     }
-     
-  //   //   }
-  //   // )
-
-  //   create_related_cards_badge(t, isDetailed).then(badge => {
-  //     if (badge) {
-  //       badge.callback = function(context) { // function to run on click
-  //         return context.popup({
-  //           title: 'Cards relations',
-  //           items: items,
-  //             search: {
-  //               count: 20, // How many items to display at a time
-  //               placeholder: 'Search card',
-  //               empty: 'No cards found',
-  //               height: 184
-  //             }
-  //         });
-  //       }
-  //     }
-  //   })
-
-  //   return result;
-  // })
 };
 
 function find_related_cards(attachments) {

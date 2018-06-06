@@ -39,7 +39,6 @@ document.getElementById('save').addEventListener('click', function(){
 
 document.getElementById("numeric_field").addEventListener("keydown", function(e) {
   if (!e) { var e = window.event; }
-  e.preventDefault(); 
   if (e.keyCode == 13) { submit() }
 }, false);
 
