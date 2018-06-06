@@ -17,11 +17,9 @@ t.render(function render() {
         
         let theCard = cards.filter((e) => {return e.id == rc.name})[0]
         if (theCard) {
-          console.log('I found it')
           create_card_view(theCard.name, theCard.id)
         }
         else {
-          console.log('I dont found it')
           create_card_view(rc.name, rc.name)
         }
       })

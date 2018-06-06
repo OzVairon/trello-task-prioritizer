@@ -110,6 +110,21 @@ function create_hours_badge(t, isDetailed) {
   })
 }
 
+function create_related_cards_badge(t, isDetailed) {
+  return t.card('attachment').then((att) => {
+    let related = find_related_cards;
+    let badge
+    if (isDetailed || related.size > 0) {
+      badge = {
+        title: 'Related cards', 
+        text: related.size + 'related',
+        icon: GRAY_ICON, 
+      }
+    }
+    return badge
+  })  
+}
+
 
 
 
@@ -137,6 +152,7 @@ var getBadges = function(t, isDetailed){
       result.push(badge)
     }
   }).then(()=>{return result})
+  .catch((err).console.log(err))
 
 
 
@@ -235,25 +251,7 @@ function find_related_cards(attachments) {
 }
 
 
-function create_related_cards_badge(t, isDetailed) {
-  return t.card('attachment').then((att) => {
-    let related = find_related_cards;
-    let badge
-    if (isDetailed || related.size > 0) {
-      badge = {
-        title: 'Related cards', 
-        text: related.size + 'related',
-        icon: GRAY_ICON, 
-      }
-    }
-    return badge
-  })
 
-
-
-  
-  
-}
 
 var related_cards = function(t, opt) {
 
