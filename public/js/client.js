@@ -93,7 +93,6 @@ function create_hours_badge(t, isDetailed) {
   return t.get('card', 'shared', 'effort_hours')
   .then((hours) => {
     let badge
-    console.log(hours)
     if (isDetailed || hours) {
       if (hours == undefined) hours = 'not defined';
       badge = {

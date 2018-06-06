@@ -3,7 +3,7 @@
 let Promise = TrelloPowerUp.Promise;
 let t = TrelloPowerUp.iframe();
 
-let field = document.getElementById('numeric_field');
+
 
 
 t.render(function(){
@@ -19,11 +19,12 @@ t.render(function(){
   //   t.sizeTo('#content')
   //   .done();
   // })
-  console.log('render')
+
+  let field = document.getElementById('numeric_field');
   
   t.get('card', 'shared', 'effort_hours')
   .then((hours)=>{
-    console.log(hours)
+    console.log(field)
     if (data) field.value = data
     else field.value = 0;
   })
@@ -32,9 +33,10 @@ t.render(function(){
     .done();
   })
 });
-
+s
 document.getElementById('save').addEventListener('click', function(){
   console.log(t.getContext())
+  let field = document.getElementById('numeric_field');
   return t.set('card', 'shared', 'effort_hours', field.value)
   .then(function(){
       t.closePopup();
