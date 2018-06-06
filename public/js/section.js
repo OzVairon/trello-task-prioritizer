@@ -69,6 +69,10 @@ function delete_attachment(card_id, att_id) {
       console.log(this.responseText);
     }
   });
-  xhr.open("DELETE", `https://api.trello.com/1/cards/${card_id}/attachments/${att_id}`);
+
+  let key = '1bd6eb54b14babeeb34032a923075fbb'
+
+  let token = ''
+  xhr.open("DELETE", `https://api.trello.com/1/cards/${card_id}/attachments/${att_id}?key=${key}`);
   xhr.send(data);
 }
