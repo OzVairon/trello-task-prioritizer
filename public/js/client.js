@@ -113,7 +113,7 @@ function create_hours_badge(t, isDetailed) {
 }
 
 function create_related_cards_badge(t, isDetailed) {
-  return t.card('attachment')
+  return t.card('attachments')
   .then((att) => {
     let related = find_related_cards;
     let badge
@@ -137,10 +137,10 @@ var getBadges = function(t, isDetailed){
   
   return create_hours_badge(t, isDetailed)
   .then((b) => {if (b) result.push(b)})
-  // .then(() => {
-  //   return create_related_cards_badge(t, isDetailed)
-  //   .then((b) => {if (b) result.push(b)})
-  // })
+  .then(() => {
+    return create_related_cards_badge(t, isDetailed)
+    .then((b) => {if (b) result.push(b)})
+  })
   .then(()=>{return result})
   .catch((err) => {
     console.log(err)

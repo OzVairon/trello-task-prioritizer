@@ -21,12 +21,11 @@ t.render(function(){
   // })
 
   let field = document.getElementById('numeric_field');
-  
   t.get('card', 'shared', 'effort_hours')
   .then((hours)=>{
-    console.log(field)
-    if (data) field.value = data
+    if (hours) field.value = hours
     else field.value = 0;
+    field.focus();
   })
   .then(() => {
     t.sizeTo('#content')
