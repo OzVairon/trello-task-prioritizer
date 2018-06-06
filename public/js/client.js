@@ -121,7 +121,6 @@ var getBadges = function(t, isDetailed){
           text: card.name,
           url: url,
           callback: function(t){
-            console.log(nameForCode)
             if (t.memberCanWriteToModel('card')){
               return t.attach({ url: urlForCode, name: card.id })
               .then(function(){
