@@ -17,7 +17,7 @@ t.render(function render() {
         
         let theCard = cards.filter((e) => {return e.id == rc.name})[0]
         if (theCard) {
-          create_card_view(theCard.name, theCard.id)
+          create_card_view(theCard.name, theCard.id, rc.id)
         }
         else {
           create_card_view(rc.name, rc.name)
@@ -36,7 +36,7 @@ t.render(function render() {
 });
 
 
-function create_card_view(name, id) {
+function create_card_view(name, id, att_id) {
   let card_html = (
     `<div class ='card-back'>
       <div><span class='card-title'>${name}</span></div>
@@ -51,4 +51,22 @@ function create_card_view(name, id) {
   newNode.addEventListener('click', function(){
     t.showCard(id)
   })
+
+  newNode.getElementByClass('delete-att-button')[0].addEventListener('click', function(){
+    t.card('id').then(card_id => {
+      delete_attachment(card_id, att_id)
+    })
+  })
 } 
+
+function delete_attachment(card_id, att_id) {
+  var data = null;
+  var xhr = new XMLHttpRequest();
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === this.DONE) {
+      console.log(this.responseText);
+    }
+  });
+  xhr.open("DELETE", `https://api.trello.com/1/cards/${card_id}/attachments/${att_id}`);
+  xhr.send(data);
+}
