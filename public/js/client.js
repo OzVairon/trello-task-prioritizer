@@ -115,12 +115,12 @@ function create_hours_badge(t, isDetailed) {
 function create_related_cards_badge(t, isDetailed) {
   return t.card('attachments')
   .then((att) => {
-    let related = find_related_cards;
+    let related = find_related_cards(att);
     let badge
     if (isDetailed || related.size > 0) {
       badge = {
         title: 'Related cards', 
-        text: related.size + 'related',
+        text: related.size + ' related',
         icon: GRAY_ICON, 
       }
     }
@@ -131,39 +131,117 @@ function create_related_cards_badge(t, isDetailed) {
 
 
 
+
+
 var getBadges = function(t, isDetailed){
 
   let result = [];
   
-  return create_hours_badge(t, isDetailed)
-  .then((b) => {if (b) result.push(b)})
-  .then(() => {
-    return create_related_cards_badge(t, isDetailed)
-    .then((b) => {if (b) result.push(b)})
-  })
+  return Promise.all(
+    [
+      create_hours_badge(t, isDetailed)
+      .then((b) => {if (b) result.push(b)})
+    ,
+      Promise.all([
+        create_related_cards_badge(t, isDetailed)
+        ,
+        t.cards('all')
+        .then((cards) => {
+          let items = cards.map(
+            function(card){
+              var urlForCard = 'https://trello.com/c/' + card.id;
+              
+              return {
+                text: card.name,
+                url: urlForCard,
+                callback: function(t){
+                  if (t.memberCanWriteToModel('card')){
+                    return t.attach({ url: urlForCard, name: card.id })
+                    .then(function(){
+                      return t.closePopup();
+                    });
+                  } else {
+                    console.log("Oh no! You don't have permission to add attachments to this card.")
+                    return t.closePopup(); // We're just going to close the popup for now.
+                  };
+                }
+              };
+            });
+          return items
+        })
+
+      ]).spread((badge, items) => {
+        badge.callback = function(context) { 
+          return context.popup({
+            title: 'Cards relations',
+            items: items,
+              search: {
+                count: 20, 
+                placeholder: 'Search card',
+                empty: 'No cards found',
+                height: 184
+              }
+          });
+        }
+      })
+  ])
   .then(()=>{return result})
   .catch((err) => {
     console.log(err)
     return result
   })
-  // .create_related_cards_badge(t, isDetailed)
-  // .then(badge => {
-  //   if (badge) {
-  //     badge.callback = function(context) { // function to run on click
-  //       return context.popup({
-  //         title: 'Cards relations',
-  //         items: items,
-  //           search: {
-  //             count: 20, // How many items to display at a time
-  //             placeholder: 'Search card',
-  //             empty: 'No cards found',
-  //             height: 184
-  //           }
-  //       });
+
+  // return create_hours_badge(t, isDetailed)
+  // .then((b) => {if (b) result.push(b)})
+  // .then(() => {
+  //   return create_related_cards_badge(t, isDetailed)
+  //   .then((b) => {
+  //     if (b) {
+  //       return b
+  //       b.callback = function(context) { 
+  //         return context.popup({
+  //           title: 'Cards relations',
+  //           items: items,
+  //             search: {
+  //               count: 20, 
+  //               placeholder: 'Search card',
+  //               empty: 'No cards found',
+  //               height: 184
+  //             }
+  //         });
+  //       }
+  //       // result.push(b)
   //     }
-  //     result.push(badge)
-  //   }
+  //   }).then()
   // })
+  // .then(()=>{return result})
+  // .catch((err) => {
+  //   console.log(err)
+  //   return result
+  // })
+
+
+  // let items = cards.map(
+  //   function(card){
+  //     var urlForCard = 'https://trello.com/c/' + card.id;
+      
+  //     return {
+  //       text: card.name,
+  //       url: urlForCard,
+  //       callback: function(t){
+  //         if (t.memberCanWriteToModel('card')){
+  //           return t.attach({ url: urlForCard, name: card.id })
+  //           .then(function(){
+  //             return t.closePopup();
+  //           });
+  //         } else {
+  //           console.log("Oh no! You don't have permission to add attachments to this card.")
+  //           return t.closePopup(); // We're just going to close the popup for now.
+  //         };
+  //       }
+  //     };
+  //   });
+  
   
 
 
@@ -190,26 +268,7 @@ var getBadges = function(t, isDetailed){
   //       )
   //   }
 
-  //   let items = cards.map(
-  //     function(card){
-  //       var urlForCard = 'https://trello.com/c/' + card.id;
-        
-  //       return {
-  //         text: card.name,
-  //         url: urlForCard,
-  //         callback: function(t){
-  //           if (t.memberCanWriteToModel('card')){
-  //             return t.attach({ url: urlForCard, name: card.id })
-  //             .then(function(){
-  //               return t.closePopup();
-  //             });
-  //           } else {
-  //             console.log("Oh no! You don't have permission to add attachments to this card.")
-  //             return t.closePopup(); // We're just going to close the popup for now.
-  //           };
-  //         }
-  //       };
-  //     });
+    
 
 
   //   // result.push(

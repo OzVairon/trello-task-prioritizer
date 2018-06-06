@@ -34,7 +34,17 @@ t.render(function(){
 });
 
 document.getElementById('save').addEventListener('click', function(){
-  console.log(t.getContext())
+  submit()
+})
+
+document.getElementById("numeric_field").addEventListener("keydown", function(e) {
+  if (!e) { var e = window.event; }
+  e.preventDefault(); 
+  if (e.keyCode == 13) { submit() }
+}, false);
+
+
+function submit() {
   let field = document.getElementById('numeric_field');
   return t.set('card', 'shared', 'effort_hours', field.value)
   .then(function(){
@@ -44,4 +54,4 @@ document.getElementById('save').addEventListener('click', function(){
       alert(err.message)
     }
   ).done();
-})
+}
