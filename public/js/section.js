@@ -26,18 +26,16 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(function(related){
       t.cards('all').then( (cards) => {
         document.getElementById('related-card-list').innerHTML = ""
-        related.forEach( c => {
+        related.forEach( rc => {
           
-          let theCard = cards.filter((e) => {return e.id == c.id})[0]
-          console.log(c)
-          console.log(theCard)
+          let theCard = cards.filter((e) => {return e.id == rc.name})[0]
           if (theCard) {
             console.log('I found it')
-            create_card_view(theCard.name, c.id)
+            create_card_view(theCard.name, theCard.id)
           }
           else {
             console.log('I dont found it')
-            create_card_view(c.name, c.id)
+            create_card_view(rc.name, rc.name)
           }
         })
 
