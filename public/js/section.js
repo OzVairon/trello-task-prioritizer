@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return (attachment.url.indexOf(base) == 0 && attachment.url.substring(base.length).length == 24);
     })
     .then(function(related){
-      t.cards('all').then( (related, cards) => {
+      t.cards('all').then( (cards) => {
         console.log(related)
         console.log(cards)
         document.getElementById('related-card-list').innerHTML = ""
