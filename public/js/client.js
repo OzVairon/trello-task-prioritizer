@@ -116,14 +116,14 @@ var getBadges = function(t, isDetailed){
     let items = cards.map(
       function(card){
         var url = 'https://trello.com/c/' + card.id;
-        var cardID = card.id;
+        
         return {
-          text: cardID,
+          text: card.name,
           url: url,
           callback: function(t){
             console.log(nameForCode)
             if (t.memberCanWriteToModel('card')){
-              return t.attach({ url: urlForCode, name: nameForCode })
+              return t.attach({ url: urlForCode, name: card.id })
               .then(function(){
                 return t.closePopup();
               });
