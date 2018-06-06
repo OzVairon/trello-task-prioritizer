@@ -184,6 +184,7 @@ var getBadges = function(t, isDetailed){
             });
           }
         }
+        if (badge) result.push(badge)
       })
   ])
   .then(()=>{return result})
