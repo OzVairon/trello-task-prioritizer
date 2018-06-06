@@ -24,15 +24,19 @@ document.addEventListener("DOMContentLoaded", function() {
       return (attachment.url.indexOf(base) == 0 && attachment.url.substring(base.length).length == 24);
     })
     .then(function(related){
-      console.log(related)
-      //create_card_view(related.name, related.url)
-      related.forEach( c=> {
-        create_card_view(c.name, c.id)
+      t.cards('all').then( (related, cards) => {
+        document.getElementById('related-card-list').innerHTML = ""
+        related.forEach( c => {
+          let name = cards.filter((e) => {return e.id == c.id})
+          create_card_view(c.name, c.id)
+        })
+
+        if (related.size === 0) {
+          document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
+        }
       })
 
-      if (related.size === 0) {
-        document.getElementById('related-card-list').appendChild(document.createElement('li').innerHTML('empty'));  
-      }
+      
       //var urls = related.map(function(a){ return a.url; });
       //document.getElementById('urls').textContent = urls.join(', ');
     })
@@ -51,12 +55,10 @@ document.addEventListener("DOMContentLoaded", function() {
 function create_card_view(name, id) {
   console.log(name, id)
   let card_html = (
-    `<li class = ''>
-        <div class ='card-back'>
-          <div><span class='card-title'>${name}</span></div>
-          <div><div class='delete-att-button'>x</div></div>
-        </div>
-    </li>`
+    `<div class ='card-back'>
+      <div><span class='card-title'>${name}</span></div>
+      <div><div class='delete-att-button'>x</div></div>
+    </div>`
   )
 
   var newNode = document.createElement('li');
