@@ -48,7 +48,7 @@ function create_card_view(name, card_id, att_id) {
   newNode.className = 'card-wrapper';
   newNode.innerHTML = card_html
 
-  // document.getElementById('related-card-list').appendChild(newNode);  
+  document.getElementById('related-card-list').appendChild(newNode);  
   // newNode.addEventListener('click', function(){
   //   t.showCard(card_id)
   // })
