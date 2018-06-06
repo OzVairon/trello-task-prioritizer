@@ -16,20 +16,15 @@ app.use( function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.render('pages/index'))
-app.get('/numeric', (req, res) => {
-  	console.log('try to render numeric form')
-
-
-  	res.render('pages/numeric_form')
+app.get('/effort_hours', (req, res) => {
+  	res.render('pages/effort_hours')
 	})
 	
 	app.get('/section', (req, res) => {
-  	console.log('render section')
   	res.render('pages/section')
   })
 
 app.get('/settings', (req, res) => {
-  	console.log('render modal')
   	res.render('pages/modal')
   })
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
