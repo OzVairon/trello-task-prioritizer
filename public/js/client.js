@@ -230,7 +230,7 @@ function find_related_cards(attachments) {
     let related = attachments.filter((attachment) => {
       // let base = 'https://trello.com/c/';
       // return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
-      return isTrelloCardUrl(attachmentюгкд)
+      return isTrelloCardUrl(attachment.url)
     });
     return related
   } else return []
