@@ -16,22 +16,5 @@ app.use( function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.render('pages/index'))
-app.get('/effort_hours', (req, res) => {
-  	res.render('pages/effort_hours')
-	})
-	
-	app.get('/section', (req, res) => {
-  	res.render('pages/section')
-  })
-
-app.get('/settings', (req, res) => {
-  	res.render('pages/modal')
-  })
-
-app.post('/auth', (req, res) => {
-    console.log(req.body)
-    res.send(req.body)
-  })
-  
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 

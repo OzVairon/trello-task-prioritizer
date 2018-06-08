@@ -44,7 +44,7 @@ var GLITCH_ICON = './images/glitch.svg';
 var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
 
-const BASE_URL = './'
+//const BASE_URL = './'
 const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 //const BASE_URL = '../'
 
@@ -52,7 +52,7 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 function boardButtonCallback(t){  
     return utils.doIfAuth(t, function(t) {
       return t.modal({            
-        url: BASE_URL + 'settings', 
+        url: './views/modal.html', 
         accentColor: '#ffffff', 
         height: 500, 
         fullscreen: false, 
@@ -75,7 +75,7 @@ function create_hours_badge(t, isDetailed) {
           callback: function(context) { 
             return context.popup({
               title: 'Hours effort settings',
-              url: BASE_URL + 'effort_hours' + '?description=' + 'Expected number of hours' + '&key=effort_hours',
+              url: './views/effort_hours.html',
               height: 184 
             });
           }
@@ -188,7 +188,7 @@ function related_cards(t, opt) {
       title: 'Related cards',
       content: {
         type: 'iframe',
-        url: t.signUrl(BASE_URL + 'section'),
+        url: t.signUrl('./views/section.html'),
         height: 230
       }
     }];

@@ -1,5 +1,6 @@
 const API_KEY = '1bd6eb54b14babeeb34032a923075fbb'
 
+
 function isAuth(t) {
     return t.get('member', 'private', 'token')
     .then(function(token){
@@ -14,18 +15,16 @@ function autorize(t) {
     console.log('try to authorize')
     let trelloAPIKey = API_KEY;
     if (trelloAPIKey) {
-        console.log('i have an api key')
       return t.popup({
         title: 'Authentification',
         args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+        url: './views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
         height: 200,
       });
     } else {
       console.log("🙈 Looks like you need to add your API key to the project!");
     }
 }
-
 
 function doIfAuth(t, callback) {
     return isAuth(t).then((auth_data) => {

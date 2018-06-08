@@ -56,15 +56,20 @@ function create_card_view(name, card_id, att_id) {
   // })
 
   newNode.getElementsByClassName('delete-att-button')[0].addEventListener('click', function(){
-    t.card('id').then(s_card_id => {
-      delete_attachment(s_card_id.id, att_id)
-    })
+    return t.popup({
+      title: 'BBB',
+      url: './views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+      height: 200,
+    });
+    // return t.card('id').then(s_card_id => {
+    //   return delete_attachment(s_card_id.id, att_id)
+    // })
   })
 } 
 
 function delete_attachment(card_id, att_id) {
   if (t.memberCanWriteToModel('card')) {
-    utils.doIfAuth(t, function(t) {
+    return utils.doIfAuth(t, function(t) {
       t.get('member', 'private', 'token')
       .then(token => {
         var data = null;
