@@ -206,7 +206,7 @@ function create_related_cards_badge(t, isDetailed) {
 
 
 
-var getBadges = function(t, isDetailed){
+function getBadges(t, isDetailed){
 
   let result = [];
   return Promise.all(
@@ -283,9 +283,9 @@ function find_related_cards(attachments) {
 
 
 
-let related_cards = function(t, opt) {
+function related_cards(t, opt) {
 
-  var claimed = find_related_cards(opt.entries)
+  let claimed = find_related_cards(opt.entries)
 
   if(claimed && claimed.length > 0){
     return [{
