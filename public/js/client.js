@@ -92,7 +92,7 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 
 
 
-var boardButtonCallback = function(t){  
+function boardButtonCallback(t){  
     if (isAuth()) {
       return t.modal({            
         url: BASE_URL + 'settings', // The URL to load for the iframe
@@ -322,6 +322,13 @@ TrelloPowerUp.initialize({
       icon: WHITE_ICON,
       text: 'Task Prioritizer',
       callback: boardButtonCallback
+    },
+    {
+      icon: WHITE_ICON,
+      text: 'logout',
+      callback: () => {
+        deautorize();
+      }
     }];
   },
   'card-badges': function(t, options){
