@@ -341,7 +341,7 @@ TrelloPowerUp.initialize({
       return t.popup({
         title: 'My Auth Popup',
         args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
         height: 140,
       });
     } else {
