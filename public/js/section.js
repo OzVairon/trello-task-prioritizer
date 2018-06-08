@@ -48,31 +48,38 @@ function create_card_view(name, card_id, att_id) {
   newNode.className = 'card-wrapper';
   newNode.innerHTML = card_html
 
-  document.getElementById('related-card-list').appendChild(newNode);  
+  document.getElementById('related-card-list').appendChild(newNode); 
+
+  ////TODO: showing related cards
   // newNode.addEventListener('click', function(){
   //   t.showCard(card_id)
   // })
+
   newNode.getElementsByClassName('delete-att-button')[0].addEventListener('click', function(){
     t.card('id').then(s_card_id => {
-      console.log(s_card_id)
-      console.log(att_id)
       delete_attachment(s_card_id.id, att_id)
     })
   })
 } 
 
 function delete_attachment(card_id, att_id) {
-  var data = null;
-  var xhr = new XMLHttpRequest();
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === this.DONE) {
-      console.log(this.responseText);
-    }
-  });
-
-  let key = '1bd6eb54b14babeeb34032a923075fbb'
-
-  let token = ''
-  xhr.open("DELETE", `https://api.trello.com/1/cards/${card_id}/attachments/${att_id}?key=${key}`);
-  xhr.send(data);
+  if (t.memberCanWriteToModel('card')) {
+    utils.doIfAuth(t, function(t) {
+      t.get('member', 'private', 'token')
+      .then(token => {
+        var data = null;
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener("readystatechange", function () {
+          if (this.readyState === this.DONE) {
+            console.log(this.responseText);
+          }
+        });
+        let key = '1bd6eb54b14babeeb34032a923075fbb'
+        xhr.open("DELETE", `https://api.trello.com/1/cards/${card_id}/attachments/${att_id}?key=${key}&token=${token}`);
+        xhr.send(data);
+        })
+    })
+  } else {
+    alert('You don\'t have permissions for that')
+  }  
 }
