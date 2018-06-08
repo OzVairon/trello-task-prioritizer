@@ -93,12 +93,15 @@ var oauthUrl = 'https://trello.com/1/authorize?expiration=never' +
   //'&return_url=[RETURNURL]`;
 
 var tokenLooksValid = function(token) {
+  console.log(`maybe it looks valid: ${token}`)
   return /^[0-9a-f]{64}$/.test(token);
 }
 
 var storageHandler = function(evt) {  
   if (evt.key === 'token' && evt.newValue) {
     // Do something with the token here, then...
+
+    console.log(`oh it smth interesting: ${evt.newValue}`)
     authorizeWindow.close();
     window.removeEventListener('storage', storageHandler);
   }
@@ -137,12 +140,8 @@ var boardButtonCallback = function(t){
 
       t.authorize(oauthUrl, authorizeOpts)
       .then(function(token) {
-        console.log(token)
-        return t.set('organization', 'private', 'token', token)
-        .catch(t.NotHandled, function() {
-          // fall back to storing at board level
-          return t.set('board', 'private', 'token', token);
-        });
+        console.log(`that is token ${token}`)
+        return t.set('board', 'private', 'token', token);
       })
       .then(function() {
         // now that the token is stored, we can close this popup
