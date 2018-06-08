@@ -89,7 +89,7 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 
 
 var oauthUrl = 'https://trello.com/1/authorize?expiration=never'
-  + `&name=${APPNAME}&scope=read,write&key=${KEY}&callback_method=token` 
+  + `&name=${APPNAME}&scope=read,write&key=${KEY}&callback_method=postMessage&response_type=token` 
   + `&return_url=${FULL_SERVER_URL + 'auth'}`;
 
 var tokenLooksValid = function(token) {
