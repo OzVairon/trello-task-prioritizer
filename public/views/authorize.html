@@ -32,6 +32,10 @@
           // store the token in Trello private Power-Up storage
           return t.set('member', 'private', 'token', token)
         })
+        .then(() => {
+          return t.getAll();
+        })
+        .then (data => alert(data))
         .then(function(){
           // now that we have the token we needed lets go on to letting
           // the user do whatever they need to do.
