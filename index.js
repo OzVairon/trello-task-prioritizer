@@ -27,5 +27,9 @@ app.get('/effort_hours', (req, res) => {
 app.get('/settings', (req, res) => {
   	res.render('pages/modal')
   })
+
+app.get('/auth', (req, res) => {
+    res.send(req.body)
+  })
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 

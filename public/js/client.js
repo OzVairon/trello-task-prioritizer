@@ -88,9 +88,9 @@ const BASE_URL = './'
 //const BASE_URL = '../'
 
 
-var oauthUrl = 'https://trello.com/1/authorize?expiration=never' +
-  `&name=${APPNAME}&scope=read&key=${KEY}&callback_method=fragment`
-  //'&return_url=[RETURNURL]`;
+var oauthUrl = 'https://trello.com/1/authorize?expiration=never'
+  + `&name=${APPNAME}&scope=read,write&key=${KEY}&callback_method=token` 
+  + `&return_url=${BASE_URL + 'auth'}`;
 
 var tokenLooksValid = function(token) {
   console.log(`maybe it looks valid: ${token}`)
@@ -138,7 +138,7 @@ var boardButtonCallback = function(t){
       })    
     } else {
 
-      t.authorize(oauthUrl, authorizeOpts)
+      return t.authorize(oauthUrl, authorizeOpts)
       .then(function(token) {
         console.log(`that is token ${token}`)
         return t.set('board', 'private', 'token', token);
@@ -151,13 +151,6 @@ var boardButtonCallback = function(t){
     }
   })
 
-
-
-
-
-var randomBadgeColor = function() {
-  return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
-};
 
 function create_hours_badge(t, isDetailed) {
   return t.get('card', 'shared', 'effort_hours')
@@ -206,7 +199,6 @@ function create_related_cards_badge(t, isDetailed) {
 
 
 function getBadges(t, isDetailed){
-
   let result = [];
   return Promise.all(
     [
@@ -265,8 +257,6 @@ function getBadges(t, isDetailed){
     console.log(err)
     return result
   })
-
-  
 };
 
 function find_related_cards(attachments) {
