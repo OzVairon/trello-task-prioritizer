@@ -328,11 +328,6 @@ function workingHoursBetweenDates(startDate, endDate, dayStart, dayEnd, includeW
 
 
 
-
-      
-};
-
-
 TrelloPowerUp.initialize({
   'attachment-sections': function(t, options){
     return related_cards(t, options)
