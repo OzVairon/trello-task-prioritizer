@@ -3,7 +3,7 @@
 // we can access Bluebird Promises as follows
 var Promise = TrelloPowerUp.Promise;
 
-const KEY = '1bd6eb54b14babeeb34032a923075fbb'
+
 const APPNAME = 'TrelloTaskPrioritizer'
 
 /*
@@ -20,32 +20,10 @@ t.cards('id', 'name', 'desc', 'due', 'closed', 'cover', 'attachments', 'members'
 
 t.member('id', 'fullName', 'username')
 
-For access to the rest of Trello's data, you'll need to use the RESTful API. This will require you to ask the
-user to authorize your Power-Up to access Trello on their behalf. We've included an example of how to
-do this in the `🔑 Authorization Capabilities 🗝` section at the bottom.
-
-*/
-
-/*
-
-Storing/Retrieving Your Own Data
-
-Your Power-Up is afforded 4096 chars of space per scope/visibility
-The following methods return Promises.
-
-Storing data follows the format: t.set('scope', 'visibility', 'key', 'value')
-With the scopes, you can only store data at the 'card' scope when a card is in scope
-So for example in the context of 'card-badges' or 'attachment-sections', but not 'board-badges' or 'show-settings'
-Also keep in mind storing at the 'organization' scope will only work if the active user is a member of the team
-
-Information that is private to the current user, such as tokens should be stored using 'private' at the 'member' scope
-
 t.set('organization', 'private', 'key', 'value');
 t.set('board', 'private', 'key', 'value');
 t.set('card', 'private', 'key', 'value');
 t.set('member', 'private', 'key', 'value');
-
-Information that should be available to all users of the Power-Up should be stored as 'shared'
 
 t.set('organization', 'shared', 'key', 'value');
 t.set('board', 'shared', 'key', 'value');
@@ -309,14 +287,7 @@ TrelloPowerUp.initialize({
       icon: WHITE_ICON,
       text: 'Task Prioritizer',
       callback: boardButtonCallback
-    },
-    {
-      icon: WHITE_ICON,
-      text: 'logout',
-      callback: () => {
-        deautorize();
-      }
-    }];
+    }]
   },
   'card-badges': function(t, options){
     return getBadges(t, false);
@@ -327,26 +298,10 @@ TrelloPowerUp.initialize({
 
   'authorization-status': function(t, options){
     
-    return t.get('member', 'private', 'token')
-    .then(function(token){
-      if(token){
-        return { authorized: true };
-      }
-      return { authorized: false };
-    });
+    return isAuth();
   },
   'show-authorization': function(t, options){
-    let trelloAPIKey = KEY;
-    if (trelloAPIKey) {
-      return t.popup({
-        title: 'My Auth Popup',
-        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
-        height: 140,
-      });
-    } else {
-      console.log("🙈 Looks like you need to add your API key to the project!");
-    }
+    
   }
  
   

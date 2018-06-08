@@ -1,31 +1,27 @@
+const API_KEY = '1bd6eb54b14babeeb34032a923075fbb'
+
 function isAuth() {
-    let token = Trello.token();
-    console.log(Trello)
-    if (token) {
-        console.log(token)
-        return true
-    } else return false
+    return t.get('member', 'private', 'token')
+    .then(function(token){
+      if(token){
+        return { authorized: true };
+      }
+      return { authorized: false };
+    });
 }
 
 function autorize() {
-    let opts = {
-    type: 'popup',
-    name: 'TrelloTaskPrioritizer',
-    scope: {
-        read: true,
-        write: true
-    },
-    expiration: 'never',
-    success: (ut) => {
-            console.log(isAuth())
-        }
+    let trelloAPIKey = API_KEY;
+    if (trelloAPIKey) {
+      return t.popup({
+        title: 'Authentification',
+        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
+        url: BASE_URL + 'views/authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+        height: 200,
+      });
+    } else {
+      console.log("🙈 Looks like you need to add your API key to the project!");
     }
-
-    Trello.authorize(opts)
-}
-
-function deautorize() {
-    Trello.deautorize()
 }
 
 
