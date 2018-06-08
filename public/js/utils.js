@@ -1,5 +1,7 @@
 function isAuth() {
-    let token = Trello.token;
+    let token = Trello.token();
+    console.log(Trello.autorized())
+    console.log(Trello.autorized())
     console.log(Trello)
     if (token) {
         console.log(token)
@@ -7,9 +9,11 @@ function isAuth() {
     } else return false
 }
 
-function Authentificate() {
-
+function autorize() {
+    
 }
+
+
 
 function isTrelloCardUrl(url) {
     let base = 'https://trello.com/c/';
