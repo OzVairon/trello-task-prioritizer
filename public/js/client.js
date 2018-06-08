@@ -109,6 +109,7 @@ var boardButtonCallback = function(t){
 
   //   Trello.authorize(opts)
   // }).then(()=> {
+    console.log(isAuth())
     return t.modal({            
       url: BASE_URL + 'settings', // The URL to load for the iframe
       accentColor: '#ffffff', // Optional color for the modal header 

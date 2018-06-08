@@ -1,9 +1,13 @@
 function isAuth() {
-
+    let token = Trello.token;
+    if (token) {
+        console.log(token)
+        return true
+    } else return false
 }
 
 function Authentificate() {
-
+    
 }
 
 function isTrelloCardUrl(url) {
