@@ -8,29 +8,16 @@ const APPNAME = 'TrelloTaskPrioritizer'
 
 /*
 
-Trello Data Access
-
-The following methods show all allowed fields, you only need to include those you want.
-They all return promises that resolve to an object with the requested fields.
-
-Get information about the current board
 t.board('id', 'name', 'url', 'shortLink', 'members')
 
-Get information about the current list (only available when a specific list is in context)
-So for example available inside 'attachment-sections' or 'card-badges' but not 'show-settings' or 'board-buttons'
 t.list('id', 'name', 'cards')
 
-Get information about all open lists on the current board
 t.lists('id', 'name', 'cards')
 
-Get information about the current card (only available when a specific card is in context)
-So for example available inside 'attachment-sections' or 'card-badges' but not 'show-settings' or 'board-buttons'
 t.card('id', 'name', 'desc', 'due', 'closed', 'cover', 'attachments', 'members', 'labels', 'url', 'shortLink', 'idList')
 
-Get information about all open cards on the current board
 t.cards('id', 'name', 'desc', 'due', 'closed', 'cover', 'attachments', 'members', 'labels', 'url', 'shortLink', 'idList')
 
-Get information about the current active Trello member
 t.member('id', 'fullName', 'username')
 
 For access to the rest of Trello's data, you'll need to use the RESTful API. This will require you to ask the
@@ -336,6 +323,30 @@ TrelloPowerUp.initialize({
   },
   'card-detail-badges': function(t, options) {
     return getBadges(t, true);
+  },
+
+  'authorization-status': function(t, options){
+    
+    return t.get('member', 'private', 'token')
+    .then(function(token){
+      if(token){
+        return { authorized: true };
+      }
+      return { authorized: false };
+    });
+  },
+  'show-authorization': function(t, options){
+    let trelloAPIKey = KEY;
+    if (trelloAPIKey) {
+      return t.popup({
+        title: 'My Auth Popup',
+        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
+        url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+        height: 140,
+      });
+    } else {
+      console.log("🙈 Looks like you need to add your API key to the project!");
+    }
   }
  
   

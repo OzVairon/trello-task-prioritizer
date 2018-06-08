@@ -24,6 +24,10 @@ function autorize() {
     Trello.authorize(opts)
 }
 
+function deautorize() {
+    Trello.deautorize()
+}
+
 
 
 function isTrelloCardUrl(url) {
