@@ -28,9 +28,10 @@ app.get('/settings', (req, res) => {
   	res.render('pages/modal')
   })
 
-app.get('/auth', (req, res) => {
+app.post('/auth', (req, res) => {
     console.log(req.body)
     res.send(req.body)
   })
+  
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
