@@ -29,6 +29,7 @@ app.get('/settings', (req, res) => {
   })
 
 app.get('/auth', (req, res) => {
+    console.log(req.body)
     res.send(req.body)
   })
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
