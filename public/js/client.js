@@ -84,13 +84,13 @@ var WHITE_ICON = './images/icon-white.svg';
 var GRAY_ICON = './images/icon-gray.svg';
 
 const BASE_URL = './'
-
+const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 //const BASE_URL = '../'
 
 
 var oauthUrl = 'https://trello.com/1/authorize?expiration=never'
   + `&name=${APPNAME}&scope=read,write&key=${KEY}&callback_method=token` 
-  + `&return_url=${BASE_URL + 'auth'}`;
+  + `&return_url=${FULL_SERVER_URL + 'auth'}`;
 
 var tokenLooksValid = function(token) {
   console.log(`maybe it looks valid: ${token}`)
