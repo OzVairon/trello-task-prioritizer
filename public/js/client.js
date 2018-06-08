@@ -3,6 +3,8 @@
 // we can access Bluebird Promises as follows
 var Promise = TrelloPowerUp.Promise;
 
+const KEY = '1bd6eb54b14babeeb34032a923075fbb'
+
 /*
 
 Trello Data Access
@@ -267,14 +269,24 @@ function workingHoursBetweenDates(startDate, endDate, dayStart, dayEnd, includeW
 }
 
 var boardButtonCallback = function(t){  
-  return t.modal({            
-    url: BASE_URL + 'settings', // The URL to load for the iframe
-    accentColor: '#ffffff', // Optional color for the modal header 
-    height: 500, // Initial height for iframe; not used if fullscreen is true
-    fullscreen: false, // Whether the modal should stretch to take up the whole screen
-    title: 'Настройки плагина', // Optional title for modal header
-    
-  })        
+
+  t.loadSecret('usertoken').then((token) => {
+    if (t) {
+      return t.modal({            
+        url: BASE_URL + 'settings', // The URL to load for the iframe
+        accentColor: '#ffffff', // Optional color for the modal header 
+        height: 500, // Initial height for iframe; not used if fullscreen is true
+        fullscreen: false, // Whether the modal should stretch to take up the whole screen
+        title: 'Настройки плагина', // Optional title for modal header
+        
+      })    
+    } else {
+      alert('not auth')
+    }
+  })
+
+
+      
 };
 
 
