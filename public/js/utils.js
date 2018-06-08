@@ -3,7 +3,6 @@ const API_KEY = '1bd6eb54b14babeeb34032a923075fbb'
 function isAuth(t) {
     return t.get('member', 'private', 'token')
     .then(function(token){
-        console.log(token)
         if(token){
             return { authorized: true };
         }
@@ -12,8 +11,10 @@ function isAuth(t) {
 }
 
 function autorize(t) {
+    console.log('try to authorize')
     let trelloAPIKey = API_KEY;
     if (trelloAPIKey) {
+        console.log('i have an api key')
       return t.popup({
         title: 'Authentification',
         args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
@@ -26,6 +27,18 @@ function autorize(t) {
 }
 
 
+function doIfAuth(t, callback) {
+    return isAuth(t).then((auth_data) => {
+        if (auth_data.authorized) {
+            console.log('good')
+            return callback(t);
+        } else {
+            console.log('fail')
+            return autorize(t)
+        }
+      })
+}
+
 
 function isTrelloCardUrl(url) {
     let base = 'https://trello.com/c/';
@@ -35,5 +48,6 @@ function isTrelloCardUrl(url) {
 window.utils = {
     isAuth: isAuth,
     autorize: autorize,
-    isTrelloCardUrl: isTrelloCardUrl
+    isTrelloCardUrl: isTrelloCardUrl,
+    doIfAuth: doIfAuth
 }
