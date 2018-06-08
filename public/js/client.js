@@ -282,7 +282,14 @@ var boardButtonCallback = function(t){
         
       })    
     } else {
-      alert('not auth')
+
+      return t.popup({
+        title: 'Change Snooze Time',
+        url: 'https://trello.com/1/authorize?expiration=never&name=TrelloTaskPrioritizer&scope=read,write&response_type=token&key={YourAPIKey}',
+        //args: { myArgs: 'You can access these with t.arg()' },
+        height: 278 // initial height, can be changed later
+      });
+      //alert('not auth')
     }
   })
 
