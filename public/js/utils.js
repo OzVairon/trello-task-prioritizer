@@ -8,7 +8,20 @@ function isAuth() {
 }
 
 function autorize() {
-    
+    let opts = {
+    type: 'popup',
+    name: 'TrelloTaskPrioritizer',
+    scope: {
+        read: true,
+        write: true
+    },
+    expiration: 'never',
+    success: (ut) => {
+            console.log(isAuth())
+        }
+    }
+
+    Trello.authorize(opts)
 }
 
 

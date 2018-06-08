@@ -93,31 +93,17 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 
 
 var boardButtonCallback = function(t){  
-  //return new Promise((resolved, reject) => {
-  //   let opts = {
-  //     type: 'popup',
-  //     name: 'TrelloTaskPrioritizer',
-  //     scope: {
-  //       read: true,
-  //       write: true
-  //     },
-  //     expiration: 'never',
-  //     success: (ut) => {
-  //       resolved
-  //     }
-  //   }
-
-  //   Trello.authorize(opts)
-  // }).then(()=> {
-    console.log(isAuth())
-    return t.modal({            
-      url: BASE_URL + 'settings', // The URL to load for the iframe
-      accentColor: '#ffffff', // Optional color for the modal header 
-      height: 500, // Initial height for iframe; not used if fullscreen is true
-      fullscreen: false, // Whether the modal should stretch to take up the whole screen
-      title: 'Настройки плагина', // Optional title for modal header
-    })    
-  //})
+    if (isAuth()) {
+      return t.modal({            
+        url: BASE_URL + 'settings', // The URL to load for the iframe
+        accentColor: '#ffffff', // Optional color for the modal header 
+        height: 500, // Initial height for iframe; not used if fullscreen is true
+        fullscreen: false, // Whether the modal should stretch to take up the whole screen
+        title: 'Настройки плагина', // Optional title for modal header
+      })
+    } else {
+      autorize()
+    }
 };
 
 
