@@ -1,6 +1,6 @@
 const API_KEY = '1bd6eb54b14babeeb34032a923075fbb'
 
-function isAuth() {
+function isAuth(t) {
     return t.get('member', 'private', 'token')
     .then(function(token){
       if(token){
@@ -10,7 +10,7 @@ function isAuth() {
     });
 }
 
-function autorize() {
+function autorize(t) {
     let trelloAPIKey = API_KEY;
     if (trelloAPIKey) {
       return t.popup({
