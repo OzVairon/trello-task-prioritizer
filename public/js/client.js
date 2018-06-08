@@ -127,6 +127,7 @@ var boardButtonCallback = function(t){
 
   t.loadSecret('usertoken').then((token) => {
     console.log(token)
+    t.getAll().then(data => console.log(data))
     if (token) {
       return t.modal({            
         url: BASE_URL + 'settings', // The URL to load for the iframe
@@ -146,8 +147,8 @@ var boardButtonCallback = function(t){
           write: true
         },
         expiration: 'never',
-        success: (token) => {
-          console.log(`yeah it is a token% ${token}`)
+        success: (ut) => {
+          console.log(`yeah it is a token: ${ut}`)
         }
       }
 
@@ -213,64 +214,64 @@ function create_related_cards_badge(t, isDetailed) {
 
 
 function getBadges(t, isDetailed){
-  // let result = [];
-  // return Promise.all(
-  //   [
-  //     create_hours_badge(t, isDetailed)
-  //     .then((b) => {if (b) result.push(b)})
-  //   ,
-  //     Promise.all([
-  //       create_related_cards_badge(t, isDetailed)
-  //       ,
-  //       Promise.all ([t.cards('all'), t.card('attachments')])
-  //       .spread((cards, att) => {
-  //         let related = find_related_cards(att.attachments)
-  //         let unrelated = cards.filter(c => {return related.filter(rc => {return rc.name == c.id}).length == 0})
-  //         let items = unrelated.map(
-  //           function(card){
-  //             let temp = related.filter((rc) => {return rc.name == card.id})
-  //             let urlForCard = 'https://trello.com/c/' + card.id;
-  //             return {
-  //               text: card.name,
-  //               url: urlForCard,
-  //               callback: function(t){
-  //                 if (t.memberCanWriteToModel('card')){
-  //                   return t.attach({ url: urlForCard, name: card.id })
-  //                   .then(function(){
-  //                     return t.closePopup();
-  //                   });
-  //                 } else {
-  //                   console.log("You don't have permission to add attachments to this card.")
-  //                   return t.closePopup();
-  //                 };
-  //               }
-  //             };
-  //           });
-  //         return items
-  //       })
+  let result = [];
+  return Promise.all(
+    [
+      create_hours_badge(t, isDetailed)
+      .then((b) => {if (b) result.push(b)})
+    ,
+      Promise.all([
+        create_related_cards_badge(t, isDetailed)
+        ,
+        Promise.all ([t.cards('all'), t.card('attachments')])
+        .spread((cards, att) => {
+          let related = find_related_cards(att.attachments)
+          let unrelated = cards.filter(c => {return related.filter(rc => {return rc.name == c.id}).length == 0})
+          let items = unrelated.map(
+            function(card){
+              let temp = related.filter((rc) => {return rc.name == card.id})
+              let urlForCard = 'https://trello.com/c/' + card.id;
+              return {
+                text: card.name,
+                url: urlForCard,
+                callback: function(t){
+                  if (t.memberCanWriteToModel('card')){
+                    return t.attach({ url: urlForCard, name: card.id })
+                    .then(function(){
+                      return t.closePopup();
+                    });
+                  } else {
+                    console.log("You don't have permission to add attachments to this card.")
+                    return t.closePopup();
+                  };
+                }
+              };
+            });
+          return items
+        })
 
-  //     ]).spread((badge, items) => {
-  //       if (isDetailed && badge) {
-  //         badge.callback = function(context) { 
-  //           return context.popup({
-  //             title: 'Cards relations',
-  //             items: items,
-  //             search: {
-  //               count: 10, 
-  //               placeholder: 'Search card',
-  //               empty: 'No cards found'
-  //             }
-  //           });
-  //         }
-  //       }
-  //       if (badge) result.push(badge)
-  //     })
-  // ])
-  // .then(()=>{return result})
-  // .catch((err) => {
-  //   console.log(err)
-  //   return result
-  // })
+      ]).spread((badge, items) => {
+        if (isDetailed && badge) {
+          badge.callback = function(context) { 
+            return context.popup({
+              title: 'Cards relations',
+              items: items,
+              search: {
+                count: 10, 
+                placeholder: 'Search card',
+                empty: 'No cards found'
+              }
+            });
+          }
+        }
+        if (badge) result.push(badge)
+      })
+  ])
+  .then(()=>{return result})
+  .catch((err) => {
+    console.log(err)
+    return result
+  })
 };
 
 function find_related_cards(attachments) {
