@@ -4,6 +4,7 @@
 var Promise = TrelloPowerUp.Promise;
 
 const KEY = '1bd6eb54b14babeeb34032a923075fbb'
+const APPNAME = 'TrelloTaskPrioritizer'
 
 /*
 
@@ -85,6 +86,74 @@ var GRAY_ICON = './images/icon-gray.svg';
 const BASE_URL = './'
 
 //const BASE_URL = '../'
+
+
+var oauthUrl = 'https://trello.com/1/authorize?expiration=never' +
+  `&name=${APPNAME}&scope=read&key=${KEY}&callback_method=fragment`
+  //'&return_url=[RETURNURL]`;
+
+var tokenLooksValid = function(token) {
+  return /^[0-9a-f]{64}$/.test(token);
+}
+
+var storageHandler = function(evt) {  
+  if (evt.key === 'token' && evt.newValue) {
+    // Do something with the token here, then...
+    authorizeWindow.close();
+    window.removeEventListener('storage', storageHandler);
+  }
+}
+
+var authorizeOpts = {
+  height: 680,
+  width: 580,
+  validToken: tokenLooksValid,
+  windowCallback: function(authorizeWindow) {
+    // This callback gets called with the handle to the
+    // authorization window. This can be useful if you
+    // can't call window.close() in your new window 
+    // (such as the case when your authorization page
+    // is rendered inside an iframe).
+    window.addEventListener('storage', storageHandler);
+  }
+};
+
+
+
+var boardButtonCallback = function(t){  
+
+  t.loadSecret('usertoken').then((token) => {
+    console.log(token)
+    if (token) {
+      return t.modal({            
+        url: BASE_URL + 'settings', // The URL to load for the iframe
+        accentColor: '#ffffff', // Optional color for the modal header 
+        height: 500, // Initial height for iframe; not used if fullscreen is true
+        fullscreen: false, // Whether the modal should stretch to take up the whole screen
+        title: 'Настройки плагина', // Optional title for modal header
+        
+      })    
+    } else {
+
+      t.authorize(oauthUrl, authorizeOpts)
+      .then(function(token) {
+        console.log(token)
+        return t.set('organization', 'private', 'token', token)
+        .catch(t.NotHandled, function() {
+          // fall back to storing at board level
+          return t.set('board', 'private', 'token', token);
+        });
+      })
+      .then(function() {
+        // now that the token is stored, we can close this popup
+        // you might alternatively choose to open a new popup
+        return t.closePopup();
+      });
+    }
+  })
+
+
+
 
 
 var randomBadgeColor = function() {
@@ -268,30 +337,7 @@ function workingHoursBetweenDates(startDate, endDate, dayStart, dayEnd, includeW
     return (minutesWorked / 60).toFixed(2);
 }
 
-var boardButtonCallback = function(t){  
 
-  t.loadSecret('usertoken').then((token) => {
-    console.log(token)
-    if (token) {
-      return t.modal({            
-        url: BASE_URL + 'settings', // The URL to load for the iframe
-        accentColor: '#ffffff', // Optional color for the modal header 
-        height: 500, // Initial height for iframe; not used if fullscreen is true
-        fullscreen: false, // Whether the modal should stretch to take up the whole screen
-        title: 'Настройки плагина', // Optional title for modal header
-        
-      })    
-    } else {
-
-      return t.popup({
-        title: 'Change Snooze Time',
-        url: `https://trello.com/1/authorize?expiration=never&name=TrelloTaskPrioritizer&scope=read,write&response_type=token&key=${KEY}`,
-        //args: { myArgs: 'You can access these with t.arg()' },
-        height: 278 // initial height, can be changed later
-      });
-      //alert('not auth')
-    }
-  })
 
 
       
