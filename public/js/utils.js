@@ -3,10 +3,11 @@ const API_KEY = '1bd6eb54b14babeeb34032a923075fbb'
 function isAuth(t) {
     return t.get('member', 'private', 'token')
     .then(function(token){
-      if(token){
-        return { authorized: true };
-      }
-      return { authorized: false };
+        console.log(token)
+        if(token){
+            return { authorized: true };
+        }
+        return { authorized: false };
     });
 }
 
