@@ -162,8 +162,6 @@ function create_related_cards_badge(t, isDetailed) {
 }
 
 
-
-
 function getBadges(t, isDetailed){
   let result = [];
   return Promise.all(
@@ -235,9 +233,6 @@ function find_related_cards(attachments) {
     return related
   } else return []
 }
-
-
-
 
 function related_cards(t, opt) {
 
