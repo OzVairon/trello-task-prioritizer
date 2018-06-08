@@ -88,83 +88,33 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 //const BASE_URL = '../'
 
 
-var oauthUrl = 'https://trello.com/1/authorize?expiration=never'
-  + `&name=${APPNAME}&scope=read,write&key=${KEY}&callback_method=postMessage&response_type=token` 
-  + `&return_url=${FULL_SERVER_URL + 'auth'}`;
 
-var tokenLooksValid = function(token) {
-  console.log(`maybe it looks valid: ${token}`)
-  return /^[0-9a-f]{64}$/.test(token);
-}
-
-var storageHandler = function(evt) {  
-  if (evt.key === 'token' && evt.newValue) {
-    // Do something with the token here, then...
-
-    console.log(`oh it smth interesting: ${evt.newValue}`)
-    authorizeWindow.close();
-    window.removeEventListener('storage', storageHandler);
-  }
-}
-
-var authorizeOpts = {
-  height: 680,
-  width: 580,
-  validToken: tokenLooksValid,
-  windowCallback: function(authorizeWindow) {
-    // This callback gets called with the handle to the
-    // authorization window. This can be useful if you
-    // can't call window.close() in your new window 
-    // (such as the case when your authorization page
-    // is rendered inside an iframe).
-    window.addEventListener('storage', storageHandler);
-  }
-};
 
 
 
 var boardButtonCallback = function(t){  
 
-  t.loadSecret('usertoken').then((token) => {
-    console.log(token)
-    t.getAll().then(data => console.log(data))
-    if (token) {
-      return t.modal({            
-        url: BASE_URL + 'settings', // The URL to load for the iframe
-        accentColor: '#ffffff', // Optional color for the modal header 
-        height: 500, // Initial height for iframe; not used if fullscreen is true
-        fullscreen: false, // Whether the modal should stretch to take up the whole screen
-        title: 'Настройки плагина', // Optional title for modal header
-        
-      })    
-    } else {
-
-      let opts ={
-        type: 'popup',
-        name: 'TrelloTaskPrioritizer',
-        scope: {
-          read: true,
-          write: true
-        },
-        expiration: 'never',
-        success: (ut) => {
-          console.log(`yeah it is a token: ${ut}`)
-        }
-      }
-
-      Trello.authorize(opts)
-
-      // return t.authorize(oauthUrl, authorizeOpts)
-      // .then(function(token) {
-      //   console.log(`that is token ${token}`)
-      //   return t.set('board', 'private', 'token', token);
-      // })
-      // .then(function() {
-      //   // now that the token is stored, we can close this popup
-      //   // you might alternatively choose to open a new popup
-      //   return t.closePopup();
-      // });
+  let opts ={
+    type: 'popup',
+    name: 'TrelloTaskPrioritizer',
+    scope: {
+      read: true,
+      write: true
+    },
+    expiration: 'never',
+    success: (ut) => {
+      console.log(`yeah it is a token: ${ut}`)
     }
+  }
+
+  Trello.authorize(opts).then(()=> {
+    return t.modal({            
+      url: BASE_URL + 'settings', // The URL to load for the iframe
+      accentColor: '#ffffff', // Optional color for the modal header 
+      height: 500, // Initial height for iframe; not used if fullscreen is true
+      fullscreen: false, // Whether the modal should stretch to take up the whole screen
+      title: 'Настройки плагина', // Optional title for modal header
+    })    
   })
 };
 
