@@ -271,7 +271,8 @@ function workingHoursBetweenDates(startDate, endDate, dayStart, dayEnd, includeW
 var boardButtonCallback = function(t){  
 
   t.loadSecret('usertoken').then((token) => {
-    if (t) {
+    console.log(token)
+    if (token) {
       return t.modal({            
         url: BASE_URL + 'settings', // The URL to load for the iframe
         accentColor: '#ffffff', // Optional color for the modal header 
