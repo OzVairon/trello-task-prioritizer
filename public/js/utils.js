@@ -1,7 +1,5 @@
 function isAuth() {
     let token = Trello.token();
-    console.log(Trello.autorized())
-    console.log(Trello.autorized())
     console.log(Trello)
     if (token) {
         console.log(token)
