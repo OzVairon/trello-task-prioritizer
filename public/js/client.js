@@ -297,11 +297,10 @@ TrelloPowerUp.initialize({
   },
 
   'authorization-status': function(t, options){
-    
-    return isAuth();
+    return utils.isAuth(t);
   },
   'show-authorization': function(t, options){
-    return autorize()
+    return utils.autorize(t)
   }
  
   
