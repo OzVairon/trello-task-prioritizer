@@ -93,25 +93,22 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 
 
 var boardButtonCallback = function(t){  
+  //return new Promise((resolved, reject) => {
+  //   let opts = {
+  //     type: 'popup',
+  //     name: 'TrelloTaskPrioritizer',
+  //     scope: {
+  //       read: true,
+  //       write: true
+  //     },
+  //     expiration: 'never',
+  //     success: (ut) => {
+  //       resolved
+  //     }
+  //   }
 
-  
-
-  return new Promise((resolved, reject) => {
-    let opts = {
-      type: 'popup',
-      name: 'TrelloTaskPrioritizer',
-      scope: {
-        read: true,
-        write: true
-      },
-      expiration: 'never',
-      success: (ut) => {
-        resolved
-      }
-    }
-
-    Trello.authorize(opts)
-  }).then(()=> {
+  //   Trello.authorize(opts)
+  // }).then(()=> {
     return t.modal({            
       url: BASE_URL + 'settings', // The URL to load for the iframe
       accentColor: '#ffffff', // Optional color for the modal header 
@@ -119,7 +116,7 @@ var boardButtonCallback = function(t){
       fullscreen: false, // Whether the modal should stretch to take up the whole screen
       title: 'Настройки плагина', // Optional title for modal header
     })    
-  })
+  //})
 };
 
 
@@ -231,8 +228,9 @@ function getBadges(t, isDetailed){
 function find_related_cards(attachments) {
   if (attachments) {
     let related = attachments.filter((attachment) => {
-      let base = 'https://trello.com/c/';
-      return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
+      // let base = 'https://trello.com/c/';
+      // return (attachment.url.indexOf(base) === 0 && attachment.url.substring(base.length).length === 24);
+      return isTrelloCardUrl(attachmentюгкд)
     });
     return related
   } else return []
