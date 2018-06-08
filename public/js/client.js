@@ -138,16 +138,31 @@ var boardButtonCallback = function(t){
       })    
     } else {
 
-      return t.authorize(oauthUrl, authorizeOpts)
-      .then(function(token) {
-        console.log(`that is token ${token}`)
-        return t.set('board', 'private', 'token', token);
-      })
-      .then(function() {
-        // now that the token is stored, we can close this popup
-        // you might alternatively choose to open a new popup
-        return t.closePopup();
-      });
+      let opts ={
+        type: 'popup',
+        name: 'TrelloTaskPrioritizer',
+        scope: {
+          read: true,
+          write: true
+        },
+        expiration: 'never',
+        success: (token) => {
+          console.log(`yeah it is a token% ${token}`)
+        }
+      }
+
+      Trello.authorize(opts)
+
+      // return t.authorize(oauthUrl, authorizeOpts)
+      // .then(function(token) {
+      //   console.log(`that is token ${token}`)
+      //   return t.set('board', 'private', 'token', token);
+      // })
+      // .then(function() {
+      //   // now that the token is stored, we can close this popup
+      //   // you might alternatively choose to open a new popup
+      //   return t.closePopup();
+      // });
     }
   })
 };
