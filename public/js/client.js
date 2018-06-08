@@ -94,20 +94,24 @@ const FULL_SERVER_URL = 'https://trello-task-prioritizer.herokuapp.com/'
 
 var boardButtonCallback = function(t){  
 
-  let opts ={
-    type: 'popup',
-    name: 'TrelloTaskPrioritizer',
-    scope: {
-      read: true,
-      write: true
-    },
-    expiration: 'never',
-    success: (ut) => {
-      console.log(`yeah it is a token: ${ut}`)
-    }
-  }
+  
 
-  Trello.authorize(opts).then(()=> {
+  return new Promise((resolved, reject) => {
+    let opts = {
+      type: 'popup',
+      name: 'TrelloTaskPrioritizer',
+      scope: {
+        read: true,
+        write: true
+      },
+      expiration: 'never',
+      success: (ut) => {
+        resolved
+      }
+    }
+
+    Trello.authorize(opts)
+  }).then(()=> {
     return t.modal({            
       url: BASE_URL + 'settings', // The URL to load for the iframe
       accentColor: '#ffffff', // Optional color for the modal header 
